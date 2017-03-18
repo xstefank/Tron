@@ -24,10 +24,6 @@ public abstract class AbstractCoreGameEngine {
     private boolean running;
     protected ScreenManager screenManager;
 
-    public void stop() {
-        running = false;
-    }
-
     public void run() {
         try {
             init();

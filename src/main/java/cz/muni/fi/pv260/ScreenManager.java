@@ -3,12 +3,10 @@ package cz.muni.fi.pv260;
 import javax.swing.JFrame;
 import java.awt.DisplayMode;
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class ScreenManager {
 
@@ -34,10 +32,6 @@ public class ScreenManager {
             }
         }
         return null;
-    }
-
-    public DisplayMode getCurrentDisplayMode() {
-        return graphicsDevice.getDisplayMode();
     }
 
     public boolean displayModesMatch(DisplayMode mode1, DisplayMode mode2) {
@@ -118,16 +112,4 @@ public class ScreenManager {
         }
         graphicsDevice.setFullScreenWindow(null);
     }
-
-    public BufferedImage createCompatibaleimage(int w, int h, int t) {
-        Window fullScreenWindow = graphicsDevice.getFullScreenWindow();
-        if (fullScreenWindow != null) {
-            GraphicsConfiguration gc = fullScreenWindow.getGraphicsConfiguration();
-            return gc.createCompatibleImage(w, h, t);
-        } else {
-            return null;
-        }
-
-    }
-
 }
