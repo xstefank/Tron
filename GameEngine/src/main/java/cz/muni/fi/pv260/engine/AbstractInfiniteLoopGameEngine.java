@@ -1,6 +1,6 @@
 package cz.muni.fi.pv260.engine;
 
-import cz.muni.fi.pv260.ScreenManager;
+import cz.muni.fi.pv260.engine.ScreenManager;
 
 import java.awt.Color;
 import java.awt.DisplayMode;

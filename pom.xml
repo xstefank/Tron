@@ -6,29 +6,23 @@
 
     <groupId>cz.muni.fi.pv260</groupId>
     <artifactId>tron-game</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>GameEngine</module>
+        <module>Tron</module>
+    </modules>
 
     <properties>
-        <exec.maven.plugin.version>1.5.0</exec.maven.plugin.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
         <maven.compiler.plugin.source>1.8</maven.compiler.plugin.source>
         <maven.compiler.plugin.target>1.8</maven.compiler.plugin.target>
-        <trongame.main.class>cz.muni.fi.pv260.TronGameEngine</trongame.main.class>
     </properties>
 
     <build>
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec.maven.plugin.version}</version>
-                <configuration>
-                    <mainClass>${trongame.main.class}</mainClass>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

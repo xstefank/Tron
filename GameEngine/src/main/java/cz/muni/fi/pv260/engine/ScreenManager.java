@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260;
+package cz.muni.fi.pv260.engine;
 
 import javax.swing.JFrame;
 import java.awt.DisplayMode;
