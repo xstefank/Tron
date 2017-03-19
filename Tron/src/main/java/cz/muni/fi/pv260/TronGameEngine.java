@@ -1,5 +1,8 @@
 package cz.muni.fi.pv260;
 
+import cz.muni.fi.pv260.control.Direction;
+import cz.muni.fi.pv260.control.DirectionControl2D;
+import cz.muni.fi.pv260.control.DirectionControl2DImpl;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 
 import java.awt.Color;
@@ -19,8 +22,8 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     private int yPossitionPlayer1 = 40;
     private int xPositionPlayer2 = 600;
     private int yPositionPlayer2 = 440;
-    private int currentDirectionPlayer1 = 1;
-    private int currentDirectionPlayer2 = 3;
+    private DirectionControl2D currentDirectionPlayer1 = new DirectionControl2DImpl(Direction.RIGHT);
+    private DirectionControl2D currentDirectionPlayer2 = new DirectionControl2DImpl(Direction.LEFT);
 
     private List<Integer> xPathPlayer1 = new ArrayList<>();
     private List<Integer> yPathPlayer1 = new ArrayList<>();
@@ -45,29 +48,29 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     public void draw(Graphics2D graphics) {
         int moveAmount = 5;
 
-        switch (currentDirectionPlayer1) {
-            case 0:
+        switch (currentDirectionPlayer1.getDirection()) {
+            case UP:
                 if (yPossitionPlayer1 > 0) {
                     yPossitionPlayer1 -= moveAmount;
                 } else {
                     yPossitionPlayer1 = screenManager.getHeight();
                 }
                 break;
-            case 1:
+            case RIGHT:
                 if (xPositionPlayer1 < screenManager.getWidth()) {
                     xPositionPlayer1 += moveAmount;
                 } else {
                     xPositionPlayer1 = 0;
                 }
                 break;
-            case 2:
+            case DOWN:
                 if (yPossitionPlayer1 < screenManager.getHeight()) {
                     yPossitionPlayer1 += moveAmount;
                 } else {
                     yPossitionPlayer1 = 0;
                 }
                 break;
-            case 3:
+            case LEFT:
                 if (xPositionPlayer1 > 0) {
                     xPositionPlayer1 -= moveAmount;
                 } else {
@@ -75,29 +78,29 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
                 }
                 break;
         }
-        switch (currentDirectionPlayer2) {
-            case 0:
+        switch (currentDirectionPlayer2.getDirection()) {
+            case UP:
                 if (yPositionPlayer2 > 0) {
                     yPositionPlayer2 -= moveAmount;
                 } else {
                     yPositionPlayer2 = screenManager.getHeight();
                 }
                 break;
-            case 1:
+            case RIGHT:
                 if (xPositionPlayer2 < screenManager.getWidth()) {
                     xPositionPlayer2 += moveAmount;
                 } else {
                     xPositionPlayer2 = 0;
                 }
                 break;
-            case 2:
+            case DOWN:
                 if (yPositionPlayer2 < screenManager.getHeight()) {
                     yPositionPlayer2 += moveAmount;
                 } else {
                     yPositionPlayer2 = 0;
                 }
                 break;
-            case 3:
+            case LEFT:
                 if (xPositionPlayer2 > 0) {
                     xPositionPlayer2 -= moveAmount;
                 } else {
@@ -133,38 +136,22 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            if (currentDirectionPlayer1 != 2) {
-                currentDirectionPlayer1 = 0;
-            }
+            currentDirectionPlayer1.directUp();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (currentDirectionPlayer1 != 0) {
-                currentDirectionPlayer1 = 2;
-            }
+            currentDirectionPlayer1.directDown();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (currentDirectionPlayer1 != 3) {
-                currentDirectionPlayer1 = 1;
-            }
+            currentDirectionPlayer1.directRight();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (currentDirectionPlayer1 != 1) {
-                currentDirectionPlayer1 = 3;
-            }
+            currentDirectionPlayer1.directLeft();
         }
         if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
-            if (currentDirectionPlayer2 != 2) {
-                currentDirectionPlayer2 = 0;
-            }
+            currentDirectionPlayer2.directUp();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-            if (currentDirectionPlayer2 != 0) {
-                currentDirectionPlayer2 = 2;
-            }
+            currentDirectionPlayer2.directDown();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_D) {
-            if (currentDirectionPlayer2 != 3) {
-                currentDirectionPlayer2 = 1;
-            }
+            currentDirectionPlayer2.directRight();
         } else if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
-            if (currentDirectionPlayer2 != 1) {
-                currentDirectionPlayer2 = 3;
-            }
+            currentDirectionPlayer2.directLeft();
         }
     }
 
