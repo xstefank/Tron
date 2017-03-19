@@ -1,8 +1,10 @@
 package cz.muni.fi.pv260;
 
-import cz.muni.fi.pv260.control.Direction;
-import cz.muni.fi.pv260.control.DirectionControl2D;
-import cz.muni.fi.pv260.control.DirectionControl2DImpl;
+import cz.muni.fi.pv260.control.controller.KeyboardController;
+import cz.muni.fi.pv260.control.controller.KeyboardControllerBuilder;
+import cz.muni.fi.pv260.control.direction.Direction;
+import cz.muni.fi.pv260.control.direction.DirectionControl2D;
+import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 
 import java.awt.Color;
@@ -24,6 +26,8 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     private int yPositionPlayer2 = 440;
     private DirectionControl2D currentDirectionPlayer1 = new DirectionControl2DImpl(Direction.RIGHT);
     private DirectionControl2D currentDirectionPlayer2 = new DirectionControl2DImpl(Direction.LEFT);
+    private KeyboardController controller1;
+    private KeyboardController controller2;
 
     private List<Integer> xPathPlayer1 = new ArrayList<>();
     private List<Integer> yPathPlayer1 = new ArrayList<>();
@@ -42,6 +46,21 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         fullScreenWindow.addKeyListener(this);
         fullScreenWindow.addMouseListener(this);
         fullScreenWindow.addMouseMotionListener(this);
+
+        //register controllers
+        controller1 = new KeyboardControllerBuilder()
+                .addKeyboardEvent(KeyEvent.VK_UP, (e -> currentDirectionPlayer1.directUp()))
+                .addKeyboardEvent(KeyEvent.VK_DOWN, (e -> currentDirectionPlayer1.directDown()))
+                .addKeyboardEvent(KeyEvent.VK_RIGHT, (e -> currentDirectionPlayer1.directRight()))
+                .addKeyboardEvent(KeyEvent.VK_LEFT, (e -> currentDirectionPlayer1.directLeft()))
+                .build();
+
+        controller2 = new KeyboardControllerBuilder()
+                .addKeyboardEvent(KeyEvent.VK_W, (e -> currentDirectionPlayer2.directUp()))
+                .addKeyboardEvent(KeyEvent.VK_S, (e -> currentDirectionPlayer2.directDown()))
+                .addKeyboardEvent(KeyEvent.VK_D, (e -> currentDirectionPlayer2.directRight()))
+                .addKeyboardEvent(KeyEvent.VK_A, (e -> currentDirectionPlayer2.directLeft()))
+                .build();
     }
 
     @Override
@@ -135,24 +154,9 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        if (keyEvent.getKeyCode() == KeyEvent.VK_UP) {
-            currentDirectionPlayer1.directUp();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_DOWN) {
-            currentDirectionPlayer1.directDown();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_RIGHT) {
-            currentDirectionPlayer1.directRight();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_LEFT) {
-            currentDirectionPlayer1.directLeft();
-        }
-        if (keyEvent.getKeyCode() == KeyEvent.VK_W) {
-            currentDirectionPlayer2.directUp();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-            currentDirectionPlayer2.directDown();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_D) {
-            currentDirectionPlayer2.directRight();
-        } else if (keyEvent.getKeyCode() == KeyEvent.VK_A) {
-            currentDirectionPlayer2.directLeft();
-        }
+
+        controller1.processKeyboardEvent(keyEvent);
+        controller2.processKeyboardEvent(keyEvent);
     }
 
     @Override

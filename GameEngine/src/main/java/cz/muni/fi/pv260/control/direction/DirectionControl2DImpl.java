@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.control;
+package cz.muni.fi.pv260.control.direction;
 
 public class DirectionControl2DImpl implements DirectionControl2D {
 

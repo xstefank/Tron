@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.control;
+package cz.muni.fi.pv260.control.direction;
 
 public enum Direction {
 
