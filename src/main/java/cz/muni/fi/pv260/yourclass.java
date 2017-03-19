@@ -1,19 +1,13 @@
 package cz.muni.fi.pv260;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import cz.muni.fi.pv260.Player;
-import cz.muni.fi.pv260.Position;
-import cz.muni.fi.pv260.Player.Direction;
 
 
 public class yourclass extends Core implements KeyListener, MouseListener,
@@ -66,41 +60,6 @@ public class yourclass extends Core implements KeyListener, MouseListener,
 			playerController.changeDirection(player, keyCode);
 		}
 	}
-//		if (e.getKeyCode() == KeyEvent.VK_UP) {
-//			if (currentDirection1 != 2){
-//			currentDirection1 = 0;
-//			}
-//		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-//			if (currentDirection1 != 0){
-//				currentDirection1 = 2;
-//				}
-//		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-//			if (currentDirection1 != 3){
-//				currentDirection1 = 1;
-//				}
-//		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-//			if (currentDirection1 != 1){
-//				currentDirection1 = 3;
-//				}
-//		}
-//		if (e.getKeyCode() == KeyEvent.VK_W){
-//			if (currentDirection2 != 2){
-//			currentDirection2 = 0;
-//			}
-//		} else if (e.getKeyCode() == KeyEvent.VK_S) {
-//			if (currentDirection2 != 0){
-//				currentDirection2 = 2;
-//				}
-//		} else if (e.getKeyCode() == KeyEvent.VK_D) {
-//			if (currentDirection2 != 3){
-//				currentDirection2 = 1;
-//				}
-//		} else if (e.getKeyCode() == KeyEvent.VK_A) {
-//			if (currentDirection2 != 1){
-//				currentDirection2 = 3;
-//				}
-//		}
-//	}
 
 	public void keyReleased(KeyEvent e) {
 
