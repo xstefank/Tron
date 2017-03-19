@@ -1,4 +1,6 @@
-package cz.muni.fi.pv260;
+package cz.muni.fi.pv260.engine;
+
+import cz.muni.fi.pv260.ScreenManager;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
@@ -8,7 +10,7 @@ import java.awt.Point;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 
-public abstract class AbstractCoreGameEngine {
+public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
     private static final DisplayMode DISPLAY_MODES[] =
             {
@@ -22,8 +24,11 @@ public abstract class AbstractCoreGameEngine {
             };
 
     private boolean running;
+    private long currentTime;
+
     protected ScreenManager screenManager;
 
+    @Override
     public void run() {
         try {
             init();
@@ -33,7 +38,10 @@ public abstract class AbstractCoreGameEngine {
         }
     }
 
+    @Override
     public void init() {
+        currentTime = System.currentTimeMillis();
+
         screenManager = new ScreenManager();
         DisplayMode displayMode = screenManager.findFirstCompatibaleMode(DISPLAY_MODES);
         screenManager.setFullScreen(displayMode);
@@ -43,32 +51,43 @@ public abstract class AbstractCoreGameEngine {
         fullScreenWindow.setForeground(Color.RED);
         fullScreenWindow.setCursor(fullScreenWindow.getToolkit().createCustomCursor(new BufferedImage(3, 3,
                 BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "null"));
+
         running = true;
     }
 
-    public void update(long timePassed) {
+    @Override
+    public boolean isRunning() {
+        return this.running;
+    }
+
+    @Override
+    public void stop() {
+        this.running = false;
+    }
+
+    private void loopGame() {
+
+        while (isRunning()) {
+            update();
+        }
+    }
+
+    @Override
+    public void update() {
+        long timePassed = System.currentTimeMillis() - currentTime;
+        currentTime += timePassed;
+        Graphics2D graphics = screenManager.getGraphics();
+        draw(graphics);
+        graphics.dispose();
+        screenManager.update();
+
+        try {
+            Thread.sleep(20);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public abstract void draw(Graphics2D graphics);
-
-    private void loopGame() {
-        long currentTime = System.currentTimeMillis();
-
-        while (running) {
-            long timePassed = System.currentTimeMillis() - currentTime;
-            currentTime += timePassed;
-            update(timePassed);
-            Graphics2D graphics = screenManager.getGraphics();
-            draw(graphics);
-            graphics.dispose();
-            screenManager.update();
-
-            try {
-                Thread.sleep(20);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
 
 }

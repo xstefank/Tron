@@ -1,5 +1,7 @@
 package cz.muni.fi.pv260;
 
+import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Window;
@@ -11,7 +13,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TronGameEngine extends AbstractCoreGameEngine implements KeyListener, MouseListener, MouseMotionListener {
+public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements KeyListener, MouseListener, MouseMotionListener {
 
     private int xPositionPlayer1 = 40;
     private int yPossitionPlayer1 = 40;
