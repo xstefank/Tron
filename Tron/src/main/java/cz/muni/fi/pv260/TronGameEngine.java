@@ -1,5 +1,10 @@
 package cz.muni.fi.pv260;
 
+import cz.muni.fi.pv260.control.collision.CollisionDetector;
+import cz.muni.fi.pv260.control.collision.PathCollisionDetector;
+import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.control.collision.TraveledPath;
+import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
 import cz.muni.fi.pv260.control.controller.KeyboardController;
 import cz.muni.fi.pv260.control.controller.KeyboardControllerBuilder;
 import cz.muni.fi.pv260.control.direction.Direction;
@@ -15,24 +20,17 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements KeyListener, MouseListener, MouseMotionListener {
 
-    private int xPositionPlayer1 = 40;
-    private int yPossitionPlayer1 = 40;
-    private int xPositionPlayer2 = 600;
-    private int yPositionPlayer2 = 440;
     private DirectionControl2D currentDirectionPlayer1 = new DirectionControl2DImpl(Direction.RIGHT);
     private DirectionControl2D currentDirectionPlayer2 = new DirectionControl2DImpl(Direction.LEFT);
     private KeyboardController controller1;
     private KeyboardController controller2;
+    private TraveledPath pathPlayer1 = new TraveledPathListImpl();
+    private TraveledPath pathPlayer2 = new TraveledPathListImpl();
 
-    private List<Integer> xPathPlayer1 = new ArrayList<>();
-    private List<Integer> yPathPlayer1 = new ArrayList<>();
-    private List<Integer> xPathPlayer2 = new ArrayList<>();
-    private List<Integer> yPathPlayer2 = new ArrayList<>();
+    private PathCollisionDetector collisionDetector = new PathCollisionDetector();
 
     public static void main(String[] args) {
         new TronGameEngine().run();
@@ -61,18 +59,26 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
                 .addKeyboardEvent(KeyEvent.VK_D, (e -> currentDirectionPlayer2.directRight()))
                 .addKeyboardEvent(KeyEvent.VK_A, (e -> currentDirectionPlayer2.directLeft()))
                 .build();
+
+        //setup starting positions
+        pathPlayer1.addPointToPath(new Point(40, 40));
+        pathPlayer2.addPointToPath(new Point(600, 440));
     }
 
     @Override
     public void draw(Graphics2D graphics) {
         int moveAmount = 5;
+        int xPositionPlayer1 = pathPlayer1.getHeadPosition().getX();
+        int yPositionPlayer1 = pathPlayer1.getHeadPosition().getY();
+        int xPositionPlayer2 = pathPlayer2.getHeadPosition().getX();
+        int yPositionPlayer2 = pathPlayer2.getHeadPosition().getY();
 
         switch (currentDirectionPlayer1.getDirection()) {
             case UP:
-                if (yPossitionPlayer1 > 0) {
-                    yPossitionPlayer1 -= moveAmount;
+                if (yPositionPlayer1 > 0) {
+                    yPositionPlayer1 -= moveAmount;
                 } else {
-                    yPossitionPlayer1 = screenManager.getHeight();
+                    yPositionPlayer1 = screenManager.getHeight();
                 }
                 break;
             case RIGHT:
@@ -83,10 +89,10 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
                 }
                 break;
             case DOWN:
-                if (yPossitionPlayer1 < screenManager.getHeight()) {
-                    yPossitionPlayer1 += moveAmount;
+                if (yPositionPlayer1 < screenManager.getHeight()) {
+                    yPositionPlayer1 += moveAmount;
                 } else {
-                    yPossitionPlayer1 = 0;
+                    yPositionPlayer1 = 0;
                 }
                 break;
             case LEFT:
@@ -128,28 +134,26 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
                 break;
         }
 
-        for (int x = 0; x < xPathPlayer1.size(); x++) {
-            if (((xPositionPlayer1 == xPathPlayer1.get(x)) && (yPossitionPlayer1 == yPathPlayer1.get(x))) ||
-                    ((xPositionPlayer2 == xPathPlayer2.get(x)) && (yPositionPlayer2 == yPathPlayer2.get(x))) ||
-                    ((xPositionPlayer1 == xPathPlayer2.get(x)) && (yPossitionPlayer1 == yPathPlayer2.get(x))) ||
-                    ((xPositionPlayer2 == xPathPlayer1.get(x)) && (yPositionPlayer2 == yPathPlayer1.get(x)))) {
-                System.exit(0);
-            }
-        }
 
-        xPathPlayer1.add(xPositionPlayer1);
-        yPathPlayer1.add(yPossitionPlayer1);
-        xPathPlayer2.add(xPositionPlayer2);
-        yPathPlayer2.add(yPositionPlayer2);
+        pathPlayer1.addPointToPath(new Point(xPositionPlayer1, yPositionPlayer1));
+        pathPlayer2.addPointToPath(new Point(xPositionPlayer2, yPositionPlayer2));
+
+        if (collisionDetector.detectCollistionWithPoint(pathPlayer1, pathPlayer2.getHeadPosition()) ||
+                collisionDetector.detectCollistionWithPoint(pathPlayer2, pathPlayer1.getHeadPosition())) {
+            System.exit(0);
+        }
 
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, screenManager.getWidth(), screenManager.getHeight());
-        for (int x = 0; x < xPathPlayer1.size(); x++) {
-            graphics.setColor(Color.green);
-            graphics.fillRect(xPathPlayer1.get(x), yPathPlayer1.get(x), 10, 10);
-            graphics.setColor(Color.red);
-            graphics.fillRect(xPathPlayer2.get(x), yPathPlayer2.get(x), 10, 10);
-        }
+
+        graphics.setColor(Color.green);
+        pathPlayer1.getPoints().forEach(point ->
+                graphics.fillRect(point.getX(), point.getY(), 10, 10));
+
+        graphics.setColor(Color.red);
+        pathPlayer2.getPoints().forEach(point ->
+                graphics.fillRect(point.getX(), point.getY(), 10, 10));
+
     }
 
     @Override
