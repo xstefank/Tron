@@ -1,5 +1,9 @@
 package cz.muni.fi.pv260.engine;
 
+/**
+ * General interface representing operations that are
+ * executable on the every game.
+ */
 public interface GameEngine {
 
     /**

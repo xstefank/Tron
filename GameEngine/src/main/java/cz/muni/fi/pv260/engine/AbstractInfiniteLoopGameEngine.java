@@ -10,7 +10,7 @@ import java.awt.Point;
 import java.awt.Window;
 import java.awt.image.BufferedImage;
 
-public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
+public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGameEngine {
 
     private static final DisplayMode DISPLAY_MODES[] =
             {
@@ -68,7 +68,9 @@ public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
     private void loopGame() {
 
         while (isRunning()) {
+            onLoopStart();
             update();
+            onLoopEnd();
         }
     }
 
@@ -90,4 +92,13 @@ public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
     public abstract void draw(Graphics2D graphics);
 
+    @Override
+    public void onLoopStart() {
+
+    }
+
+    @Override
+    public void onLoopEnd() {
+
+    }
 }
