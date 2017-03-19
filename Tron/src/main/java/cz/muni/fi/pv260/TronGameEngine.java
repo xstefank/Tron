@@ -1,5 +1,6 @@
 package cz.muni.fi.pv260;
 
+import cz.muni.fi.pv260.collision.TronCollisionDetector;
 import cz.muni.fi.pv260.control.collision.CollisionDetector;
 import cz.muni.fi.pv260.control.collision.PathCollisionDetector;
 import cz.muni.fi.pv260.control.collision.Point;
@@ -30,7 +31,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     private TraveledPath pathPlayer1 = new TraveledPathListImpl();
     private TraveledPath pathPlayer2 = new TraveledPathListImpl();
 
-    private PathCollisionDetector collisionDetector = new PathCollisionDetector();
+    private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
 
     public static void main(String[] args) {
         new TronGameEngine().run();
@@ -138,8 +139,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         pathPlayer1.addPointToPath(new Point(xPositionPlayer1, yPositionPlayer1));
         pathPlayer2.addPointToPath(new Point(xPositionPlayer2, yPositionPlayer2));
 
-        if (collisionDetector.detectCollistionWithPoint(pathPlayer1, pathPlayer2.getHeadPosition()) ||
-                collisionDetector.detectCollistionWithPoint(pathPlayer2, pathPlayer1.getHeadPosition())) {
+        if (collisionDetector.detectCollision(pathPlayer1, pathPlayer2)) {
             System.exit(0);
         }
 

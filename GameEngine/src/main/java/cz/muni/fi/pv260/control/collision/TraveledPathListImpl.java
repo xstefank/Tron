@@ -30,4 +30,11 @@ public class TraveledPathListImpl implements TraveledPath {
     public int getLength() {
         return traveledPoints.size();
     }
+
+    @Override
+    public List<Point> getPathTail() {
+        List<Point> tail = new ArrayList<>(traveledPoints);
+        tail.remove(getLength() - 1);
+        return Collections.unmodifiableList(tail);
+    }
 }
