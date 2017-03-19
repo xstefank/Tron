@@ -67,6 +67,9 @@ public class ScreenManager {
         Window fullScreenWindow = graphicsDevice.getFullScreenWindow();
         if (fullScreenWindow != null) {
             BufferStrategy bufferStrategy = fullScreenWindow.getBufferStrategy();
+            while (bufferStrategy == null) {
+                bufferStrategy = fullScreenWindow.getBufferStrategy();
+            }
             return (Graphics2D) bufferStrategy.getDrawGraphics();
         } else {
             return null;
