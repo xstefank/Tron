@@ -65,40 +65,44 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
         this.running = false;
     }
 
-    private void loopGame() {
-
-        while (isRunning()) {
-            onLoopStart();
-            update();
-            onLoopEnd();
-        }
-    }
-
     @Override
     public void update() {
-        long timePassed = System.currentTimeMillis() - currentTime;
-        currentTime += timePassed;
         Graphics2D graphics = screenManager.getGraphics();
         draw(graphics);
         graphics.dispose();
         screenManager.update();
-
-        try {
-            Thread.sleep(20);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     public abstract void draw(Graphics2D graphics);
 
     @Override
     public void onLoopStart() {
-
     }
 
     @Override
     public void onLoopEnd() {
+    }
 
+    private void loopGame() {
+
+        while (isRunning()) {
+            onLoopStart();
+
+            long timePassed = System.currentTimeMillis() - currentTime;
+            currentTime += timePassed;
+
+            update();
+
+            runTimer();
+            onLoopEnd();
+        }
+    }
+
+    private void runTimer() {
+        try {
+            Thread.sleep(20);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
