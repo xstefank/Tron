@@ -8,9 +8,10 @@ import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
 import cz.muni.fi.pv260.model.Player;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *  Class responsible for managing players
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  */
 public class GameController {
 
-    private ArrayList<Player> players;
+    private List<Player> players = new ArrayList<>();
 
     public GameController() {
         DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.DIRECTION_RIGHT);
@@ -42,12 +43,11 @@ public class GameController {
         Player player1 = new Player((new Point(40, 40)), player1DirectionControl, controller1, Color.RED);
         Player player2 = new Player((new Point(600, 440)), player2DirectionControl, controller2, Color.BLUE);
 
-        players = new ArrayList<Player>();
         players.add(player1);
         players.add(player2);
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
