@@ -71,9 +71,10 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, screenManager.getWidth(), screenManager.getHeight());
 
-        graphics.setColor(Color.green);
+
         // TODO: unique colors for players
         for(Player playere: gameController.getPlayers()){
+            graphics.setColor(playere.getColor());
             playere.getPath().getPoints().forEach(point ->
                 graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
         }

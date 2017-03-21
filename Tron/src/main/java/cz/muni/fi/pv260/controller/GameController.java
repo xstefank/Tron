@@ -8,10 +8,13 @@ import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
 import cz.muni.fi.pv260.model.Player;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
+ *  Class responsible for managing players
+ *
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  */
 public class GameController {
@@ -36,8 +39,8 @@ public class GameController {
                 .addKeyboardEvent(KeyEvent.VK_A, (e -> player2DirectionControl.directLeft()))
                 .build();
 
-        Player player1 = new Player((new Point(40, 40)), player1DirectionControl, controller1);
-        Player player2 = new Player((new Point(600, 440)), player2DirectionControl, controller2);
+        Player player1 = new Player((new Point(40, 40)), player1DirectionControl, controller1, Color.RED);
+        Player player2 = new Player((new Point(600, 440)), player2DirectionControl, controller2, Color.BLUE);
 
         players = new ArrayList<Player>();
         players.add(player1);
