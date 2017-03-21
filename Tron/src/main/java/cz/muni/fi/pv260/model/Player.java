@@ -5,7 +5,9 @@ import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
 import cz.muni.fi.pv260.control.controller.KeyboardController;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
-import java.awt.*;
+
+import java.awt.Color;
+
 
 /**
  * Class representing a player in the game.
@@ -26,7 +28,7 @@ public class Player {
         this.color = color;
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 
