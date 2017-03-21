@@ -1,29 +1,28 @@
 package cz.muni.fi.pv260.controller;
+
 import cz.muni.fi.pv260.control.collision.Point;
 import cz.muni.fi.pv260.model.Player;
-
-import java.awt.*;
-
+import java.awt.Window;
 
 /**
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  */
 public class PlayerController {
 
-    private static Window window;
-    private static int moveLength = 5;
+    private static final int MOVE_LENGTH = 5;
+    private Window window;
 
-    public PlayerController(Window window){
+    public PlayerController(Window window) {
         this.window = window;
     }
 
-    public static void move(Player player){
-        int moveX = player.getDirectionControl().getDirection().getMultiplierX() * moveLength;
-        int moveY = player.getDirectionControl().getDirection().getMultiplierY() * moveLength;
+    public void move(Player player) {
+        int moveX = player.getDirectionControl().getDirection().getMultiplierX() * MOVE_LENGTH;
+        int moveY = player.getDirectionControl().getDirection().getMultiplierY() * MOVE_LENGTH;
         adjustPosition(player, moveX, moveY);
     }
 
-    private static void adjustPosition(Player player, int moveX, int moveY){
+    private void adjustPosition(Player player, int moveX, int moveY) {
         Point position = player.getPosition();
         int coordinateX = position.getCoordinateX() + moveX;
         int coordinateY = position.getCoordinateY() + moveY;
@@ -34,7 +33,7 @@ public class PlayerController {
         coordinateY = coordinateY > window.getHeight() ? 0 : coordinateY;
         coordinateY = coordinateY < 0 ? window.getHeight() : coordinateY;
 
-        player.getPath().addPointToPath(position);
+        player.getPath().addPointToPath(new Point(position.getCoordinateX(), position.getCoordinateY()));
         position.setCoordinates(coordinateX, coordinateY);
     }
 
