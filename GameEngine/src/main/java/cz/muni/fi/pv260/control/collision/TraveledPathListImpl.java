@@ -11,6 +11,13 @@ public class TraveledPathListImpl implements TraveledPath {
 
     private List<Point> traveledPoints = new ArrayList<>();
 
+    public TraveledPathListImpl() {
+    }
+
+    public TraveledPathListImpl(Point startionPosition) {
+        addPointToPath(startionPosition);
+    }
+
     @Override
     public void addPointToPath(Point point) {
         traveledPoints.add(point);
