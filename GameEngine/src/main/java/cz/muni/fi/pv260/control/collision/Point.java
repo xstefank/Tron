@@ -1,13 +1,14 @@
-package cz.muni.fi.pv260;
+package cz.muni.fi.pv260.control.collision;
 
 /**
- * Created by Marek on 19.3.2017.
+ * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
+ * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class Position {
+public class Point {
     private int coordinateX;
     private int coordinateY;
 
-    public Position(int coordinateX, int coordinateY) {
+    public Point(int coordinateX, int coordinateY) {
         setCoordinates(coordinateX, coordinateY);
     }
 
@@ -39,13 +40,18 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof Position){
-            if(((Position) obj).coordinateX == coordinateX &&
-                    ((Position) obj).coordinateY == coordinateY){
+        if(obj instanceof Point){
+            if(((Point) obj).coordinateX == coordinateX && ((Point) obj).coordinateY == coordinateY){
                 return true;
             }
         }
         return false;
     }
-}
 
+    @Override
+    public int hashCode() {
+        int result = coordinateX;
+        result = 31 * result + coordinateY;
+        return result;
+    }
+}

@@ -1,9 +1,12 @@
-package cz.muni.fi.pv260;
-import cz.muni.fi.pv260.Player.Direction;
+package cz.muni.fi.pv260.controller;
+import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.model.Player;
+
 import java.awt.*;
 
+
 /**
- * Created by Marek on 19.3.2017.
+ * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  */
 public class PlayerController {
 
@@ -15,13 +18,13 @@ public class PlayerController {
     }
 
     public static void move(Player player){
-        int moveX = player.getDirection().getMultiplierX() * moveLength;
-        int moveY = player.getDirection().getMultiplierY() * moveLength;
+        int moveX = player.getDirectionControl().getDirection().getMultiplierX() * moveLength;
+        int moveY = player.getDirectionControl().getDirection().getMultiplierY() * moveLength;
         adjustPosition(player, moveX, moveY);
     }
 
     private static void adjustPosition(Player player, int moveX, int moveY){
-        Position position = player.getPosition();
+        Point position = player.getPosition();
         int coordinateX = position.getCoordinateX() + moveX;
         int coordinateY = position.getCoordinateY() + moveY;
 
@@ -35,12 +38,5 @@ public class PlayerController {
         position.setCoordinates(coordinateX, coordinateY);
     }
 
-    public void changeDirection(Player player, int keyCode){
-        Direction newDirection = player.getKeys().getKeyCodeDirection(keyCode);
-        if(newDirection != null && player.getDirection() != newDirection.getOpposite()){
-            player.setDirection(newDirection);
-        }
-
-    }
 
 }
