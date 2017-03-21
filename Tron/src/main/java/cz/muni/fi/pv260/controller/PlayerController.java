@@ -33,8 +33,7 @@ public class PlayerController {
         coordinateY = coordinateY > window.getHeight() ? 0 : coordinateY;
         coordinateY = coordinateY < 0 ? window.getHeight() : coordinateY;
 
-        player.getPath().addPointToPath(new Point(position.getCoordinateX(), position.getCoordinateY()));
-        position.setCoordinates(coordinateX, coordinateY);
+        player.getPath().addPointToPath(new Point(coordinateX, coordinateY));
     }
 
 
