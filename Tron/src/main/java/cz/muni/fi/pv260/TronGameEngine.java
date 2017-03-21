@@ -2,15 +2,7 @@ package cz.muni.fi.pv260;
 
 import cz.muni.fi.pv260.collision.TronCollisionDetector;
 import cz.muni.fi.pv260.control.collision.CollisionDetector;
-import cz.muni.fi.pv260.control.collision.PathCollisionDetector;
-import cz.muni.fi.pv260.control.collision.Point;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
-import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
-import cz.muni.fi.pv260.control.controller.KeyboardController;
-import cz.muni.fi.pv260.control.controller.KeyboardControllerBuilder;
-import cz.muni.fi.pv260.control.direction.Direction;
-import cz.muni.fi.pv260.control.direction.DirectionControl2D;
-import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
 import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
@@ -24,6 +16,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.List;
+
 /**
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
@@ -32,7 +26,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
 
     private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
 
-    private GameController gameController;
+    private GameController gameController = new GameController();
     private PlayerController playerController;
 
     public static void main(String[] args) {
@@ -50,46 +44,33 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
 
         gameController = new GameController();
         playerController = new PlayerController(fullScreenWindow);
-
     }
 
     @Override
     public void draw(Graphics2D graphics) {
+        List<Player> players = gameController.getPlayers();
 
-        for(Player player: gameController.getPlayers()){
-            PlayerController.move(player);
-        }
+        players.forEach(player -> playerController.move(player));
 
-        for(Player player: gameController.getPlayers()) {
-            for(Player otherPlayer: gameController.getPlayers()) {
-                if (collisionDetector.detectCollision(player.getPath(), otherPlayer.getPath())) {
-                    System.exit(0);
-                }
+        players.forEach(player -> players.forEach(otherPlayer -> {
+            if (collisionDetector.detectCollision(player.getPath(), otherPlayer.getPath())) {
+                System.exit(0);
             }
-        }
+        }));
 
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, screenManager.getWidth(), screenManager.getHeight());
 
-
-        // TODO: unique colors for players
-        for(Player playere: gameController.getPlayers()){
-            graphics.setColor(playere.getColor());
-            playere.getPath().getPoints().forEach(point ->
-                graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
-        }
-//
-//        graphics.setColor(Color.red);
-//        pathPlayer2.getPoints().forEach(point ->
-//                graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
-
+        players.forEach(player -> {
+            graphics.setColor(player.getColor());
+            player.getPath().getPoints().forEach(point ->
+                    graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
+        });
     }
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        for (Player player : gameController.getPlayers()) {
-            player.getKeyboardController().processKeyboardEvent(keyEvent);
-        }
+        gameController.getPlayers().forEach(player -> player.getKeyboardController().processKeyboardEvent(keyEvent));
     }
 
     @Override
