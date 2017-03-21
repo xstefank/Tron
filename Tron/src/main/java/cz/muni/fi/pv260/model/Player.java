@@ -34,7 +34,7 @@ public class Player {
     }
 
     public Point getPosition() {
-        return position;
+        return path.getHeadPosition();
     }
 
     public DirectionControl2D getDirectionControl() {
