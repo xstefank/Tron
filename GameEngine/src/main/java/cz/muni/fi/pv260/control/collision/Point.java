@@ -1,49 +1,57 @@
 package cz.muni.fi.pv260.control.collision;
 
 /**
+ * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
 public class Point {
+    private int coordinateX;
+    private int coordinateY;
 
-    private int x;
-    private int y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Point(int coordinateX, int coordinateY) {
+        setCoordinates(coordinateX, coordinateY);
     }
 
-    public int getX() {
-        return x;
+    public int getCoordinateX() {
+        return coordinateX;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public int getCoordinateY() {
+        return coordinateY;
     }
 
-    public int getY() {
-        return y;
+    public void setCoordinates(int coordinateX, int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void moveCoordinates(int amountX, int amountY){
+        coordinateX += amountX;
+        coordinateY += amountY;
+    }
+
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
+    }
+
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Point point = (Point) o;
-
-        if (x != point.x) return false;
-        return y == point.y;
+    public boolean equals(Object obj) {
+        if(obj instanceof Point){
+            if(((Point) obj).coordinateX == coordinateX && ((Point) obj).coordinateY == coordinateY){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public int hashCode() {
-        int result = x;
-        result = 31 * result + y;
+        int result = coordinateX;
+        result = 31 * result + coordinateY;
         return result;
     }
 }
