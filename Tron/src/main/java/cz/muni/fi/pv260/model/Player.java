@@ -9,52 +9,41 @@ import java.awt.*;
 
 /**
  * Class representing a player in the game.
- * Contains information about player position, path, color and keyboard bindings.
  *
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  */
 public class Player {
 
-    private Point position;
     private DirectionControl2D directionControl;
     private KeyboardController keyboardController;
     private TraveledPath path;
     private Color color;
 
     public Player(Point startingPoint, DirectionControl2D directionControl, KeyboardController keyboardController, Color color) {
-        position = startingPoint;
         this.directionControl = directionControl;
         this.keyboardController = keyboardController;
-        path = new TraveledPathListImpl();
+        this.path = new TraveledPathListImpl(startingPoint);
         this.color = color;
     }
 
     public Color getColor(){
-        return color;
+        return this.color;
     }
 
     public Point getPosition() {
-        return path.getHeadPosition();
+        return this.path.getHeadPosition();
     }
 
     public DirectionControl2D getDirectionControl() {
-        return directionControl;
+        return this.directionControl;
     }
 
     public KeyboardController getKeyboardController() {
-        return keyboardController;
+        return this.keyboardController;
     }
 
     public TraveledPath getPath() {
-        return path;
-    }
-
-    public void setPath(TraveledPath path) {
-        this.path = path;
-    }
-
-    public void appendCurrentPositionToPath() {
-        path.addPointToPath(new Point(position.getCoordinateX(), position.getCoordinateY()));
+        return this.path;
     }
 
 }
