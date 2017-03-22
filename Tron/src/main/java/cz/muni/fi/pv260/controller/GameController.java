@@ -1,8 +1,8 @@
 package cz.muni.fi.pv260.controller;
 
 import cz.muni.fi.pv260.control.collision.Point;
-import cz.muni.fi.pv260.control.controller.KeyboardController;
-import cz.muni.fi.pv260.control.controller.KeyboardControllerBuilder;
+import cz.muni.fi.pv260.control.controller.keyboard.KeyboardController;
+import cz.muni.fi.pv260.control.controller.keyboard.KeyboardControllerBuilder;
 import cz.muni.fi.pv260.control.direction.Direction;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;

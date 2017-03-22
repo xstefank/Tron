@@ -9,7 +9,6 @@ public class DirectionControl2DImpl implements DirectionControl2D {
     private Direction currentDirection;
 
     public DirectionControl2DImpl(Direction startDirection) {
-
         this.currentDirection = startDirection;
     }
 
