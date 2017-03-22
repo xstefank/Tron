@@ -39,7 +39,7 @@ public class DirectionControl2DImpl implements DirectionControl2D {
     }
 
     private void setDirection(Direction newDirection) {
-        if (currentDirection != newDirection.getOpposite()) {
+        if (currentDirection != newDirection.getOppositeDirection()) {
             currentDirection = newDirection;
         }
     }

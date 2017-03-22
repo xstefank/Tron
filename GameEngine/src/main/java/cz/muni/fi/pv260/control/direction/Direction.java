@@ -2,46 +2,53 @@ package cz.muni.fi.pv260.control.direction;
 
 /**
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
+ * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
 public enum Direction {
-    DIRECTION_UP,
-    DIRECTION_RIGHT,
-    DIRECTION_DOWN,
-    DIRECTION_LEFT;
+    DIRECTION_UP(0, -1) {
+        @Override
+        public Direction getOppositeDirection() {
+            return DIRECTION_DOWN;
+        }
+    },
 
-    private int MULTIPLIER_X;
-    private int MULTIPLIER_Y;
+    DIRECTION_RIGHT(1, 0) {
+        @Override
+        public Direction getOppositeDirection() {
+            return Direction.DIRECTION_LEFT;
+        }
+    },
 
-    private Direction OPPOSITE;
+    DIRECTION_DOWN(0, 1) {
+        @Override
+        public Direction getOppositeDirection() {
+            return Direction.DIRECTION_UP;
+        }
+    },
 
-    static {
-        DIRECTION_UP.MULTIPLIER_X = 0;
-        DIRECTION_UP.MULTIPLIER_Y = -1;
+    DIRECTION_LEFT(-1, 0) {
+        @Override
+        public Direction getOppositeDirection() {
+            return Direction.DIRECTION_RIGHT;
+        }
+    };
 
-        DIRECTION_RIGHT.MULTIPLIER_X = 1;
-        DIRECTION_RIGHT.MULTIPLIER_Y = 0;
+    private int multiplierX;
+    private int multiplierY;
 
-        DIRECTION_DOWN.MULTIPLIER_X = 0;
-        DIRECTION_DOWN.MULTIPLIER_Y = 1;
-
-        DIRECTION_LEFT.MULTIPLIER_X = -1;
-        DIRECTION_LEFT.MULTIPLIER_Y = 0;
-
-        DIRECTION_UP.OPPOSITE = DIRECTION_DOWN;
-        DIRECTION_RIGHT.OPPOSITE = DIRECTION_LEFT;
-        DIRECTION_DOWN.OPPOSITE = DIRECTION_UP;
-        DIRECTION_LEFT.OPPOSITE = DIRECTION_RIGHT;
+    Direction(int multiplierX, int multiplierY) {
+        this.multiplierX = multiplierX;
+        this.multiplierY = multiplierY;
     }
 
     public int getMultiplierX(){
-        return MULTIPLIER_X;
+        return multiplierX;
     }
 
     public int getMultiplierY(){
-        return MULTIPLIER_Y;
+        return multiplierY;
     }
 
-    public Direction getOpposite(){
-        return OPPOSITE;
-    }
+    public abstract Direction getOppositeDirection();
+
 }
