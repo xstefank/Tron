@@ -1,6 +1,6 @@
 package cz.muni.fi.pv260.engine;
 
-import cz.muni.fi.pv260.engine.ScreenManager;
+import cz.muni.fi.pv260.presentation.ScreenManager;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
@@ -11,6 +11,10 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 
 public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGameEngine {
+
+    private static final int DEFAULT_SLEEP_TIME = 20;
+
+    private FrameTimer frameTimer = new InfiniteLoopFrameTimer(DEFAULT_SLEEP_TIME);
 
     private static final DisplayMode DISPLAY_MODES[] =
             {
@@ -23,16 +27,13 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
                     new DisplayMode(640, 480, 16, 0),
             };
 
-    private boolean running;
-    private long currentTime;
-
     protected ScreenManager screenManager;
 
     @Override
     public void run() {
         try {
             init();
-            loopGame();
+            startGame();
         } finally {
             screenManager.restoreScreen();
         }
@@ -40,7 +41,6 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
 
     @Override
     public void init() {
-        currentTime = System.currentTimeMillis();
 
         screenManager = new ScreenManager();
         DisplayMode displayMode = screenManager.findFirstCompatibaleMode(DISPLAY_MODES);
@@ -52,17 +52,16 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
         fullScreenWindow.setCursor(fullScreenWindow.getToolkit().createCustomCursor(new BufferedImage(3, 3,
                 BufferedImage.TYPE_INT_ARGB), new Point(0, 0), "null"));
 
-        running = true;
     }
 
     @Override
     public boolean isRunning() {
-        return this.running;
+        return frameTimer.isRunning();
     }
 
     @Override
     public void stop() {
-        this.running = false;
+        frameTimer.stopTimer();
     }
 
     @Override
@@ -83,26 +82,22 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
     public void onLoopEnd() {
     }
 
-    private void loopGame() {
+    private void startGame() {
+        frameTimer.startTimer();
+    }
 
-        while (isRunning()) {
+    private class InfiniteLoopFrameTimer extends FrameTimerImpl {
+
+        public InfiniteLoopFrameTimer(int sleepTime) {
+            super(sleepTime);
+        }
+
+        @Override
+        public void renderFrame() {
             onLoopStart();
-
-            long timePassed = System.currentTimeMillis() - currentTime;
-            currentTime += timePassed;
-
             update();
-
-            runTimer();
             onLoopEnd();
         }
     }
 
-    private void runTimer() {
-        try {
-            Thread.sleep(20);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 }
