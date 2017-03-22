@@ -70,7 +70,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
 
     @Override
     public void keyPressed(KeyEvent keyEvent) {
-        gameController.getPlayers().forEach(player -> player.getKeyboardController().processKeyboardEvent(keyEvent));
+        gameController.getPlayers().forEach(player -> player.getKeyboardController().processEvent(keyEvent));
     }
 
     @Override

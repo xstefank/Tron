@@ -3,7 +3,7 @@ package cz.muni.fi.pv260.model;
 import cz.muni.fi.pv260.control.collision.Point;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
-import cz.muni.fi.pv260.control.controller.KeyboardController;
+import cz.muni.fi.pv260.control.controller.keyboard.KeyboardController;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 
 import java.awt.Color;

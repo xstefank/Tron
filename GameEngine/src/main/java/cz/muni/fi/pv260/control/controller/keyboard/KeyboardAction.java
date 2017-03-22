@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.control.controller;
+package cz.muni.fi.pv260.control.controller.keyboard;
 
 import java.awt.event.KeyEvent;
 
