@@ -5,24 +5,20 @@ import cz.muni.fi.pv260.control.collision.CollisionDetector;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
+import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.model.Player;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Window;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 /**
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements KeyListener, MouseListener, MouseMotionListener {
+public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
     private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
 
@@ -38,12 +34,10 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         super.init();
 
         Window fullScreenWindow = customScreenManager.getFullScreenWindow();
-        fullScreenWindow.addKeyListener(this);
-        fullScreenWindow.addMouseListener(this);
-        fullScreenWindow.addMouseMotionListener(this);
 
         gameController = new GameController();
         playerController = new PlayerController(fullScreenWindow);
+        fullScreenWindow.addKeyListener(new KeyboardInputListener(gameController));
     }
 
     @Override
@@ -68,49 +62,4 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         });
     }
 
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        gameController.getPlayers().forEach(player -> player.getKeyboardController().processEvent(keyEvent));
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-
-    }
 }
