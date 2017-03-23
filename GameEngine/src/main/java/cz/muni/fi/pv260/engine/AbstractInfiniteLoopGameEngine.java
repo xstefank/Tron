@@ -1,6 +1,6 @@
 package cz.muni.fi.pv260.engine;
 
-import cz.muni.fi.pv260.presentation.ScreenManager;
+import cz.muni.fi.pv260.presentation.CustomScreenManager;
 
 import java.awt.Color;
 import java.awt.DisplayMode;
@@ -27,7 +27,7 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
                     new DisplayMode(640, 480, 16, 0),
             };
 
-    protected ScreenManager screenManager;
+    protected CustomScreenManager customScreenManager;
 
     @Override
     public void run() {
@@ -35,17 +35,17 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
             init();
             startGame();
         } finally {
-            screenManager.restoreScreen();
+            customScreenManager.restoreScreen();
         }
     }
 
     @Override
     public void init() {
 
-        screenManager = new ScreenManager();
-        DisplayMode displayMode = screenManager.findFirstCompatibaleMode(DISPLAY_MODES);
-        screenManager.setFullScreen(displayMode);
-        Window fullScreenWindow = screenManager.getFullScreenWindow();
+        customScreenManager = new CustomScreenManager();
+        DisplayMode displayMode = customScreenManager.findFirstCompatibaleMode(DISPLAY_MODES);
+        customScreenManager.setFullScreen(displayMode);
+        Window fullScreenWindow = customScreenManager.getFullScreenWindow();
         fullScreenWindow.setFont(new Font("Arial", Font.PLAIN, 20));
         fullScreenWindow.setBackground(Color.WHITE);
         fullScreenWindow.setForeground(Color.RED);
@@ -66,10 +66,10 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
 
     @Override
     public void update() {
-        Graphics2D graphics = screenManager.getGraphics();
+        Graphics2D graphics = customScreenManager.getGraphics();
         draw(graphics);
         graphics.dispose();
-        screenManager.update();
+        customScreenManager.update();
     }
 
     public abstract void draw(Graphics2D graphics);

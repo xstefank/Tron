@@ -37,7 +37,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     public void init() {
         super.init();
 
-        Window fullScreenWindow = screenManager.getFullScreenWindow();
+        Window fullScreenWindow = customScreenManager.getFullScreenWindow();
         fullScreenWindow.addKeyListener(this);
         fullScreenWindow.addMouseListener(this);
         fullScreenWindow.addMouseMotionListener(this);
@@ -59,7 +59,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         }));
 
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, screenManager.getWidth(), screenManager.getHeight());
+        graphics.fillRect(0, 0, customScreenManager.getWidth(), customScreenManager.getHeight());
 
         players.forEach(player -> {
             graphics.setColor(player.getColor());
