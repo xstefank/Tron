@@ -8,10 +8,8 @@ import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.model.Player;
+import cz.muni.fi.pv260.presentation.TronScreenManagerAdapter;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Window;
 import java.util.List;
 
 /**
@@ -25,41 +23,58 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
     private GameController gameController = new GameController();
     private PlayerController playerController;
 
+    private TronScreenManagerAdapter screenManager = new TronScreenManagerAdapter();
+
     public static void main(String[] args) {
         new TronGameEngine().run();
+    }
+
+    @Override
+    public void run() {
+        try {
+            super.run();
+        } finally {
+            screenManager.restoreUserEnvironment();
+        }
     }
 
     @Override
     public void init() {
         super.init();
 
-        Window fullScreenWindow = customScreenManager.getFullScreenWindow();
-
         gameController = new GameController();
-        playerController = new PlayerController(fullScreenWindow);
-        fullScreenWindow.addKeyListener(new KeyboardInputListener(gameController));
+        playerController = new PlayerController(screenManager.getWindow());
+        registerInputHandlers();
     }
 
     @Override
-    public void draw(Graphics2D graphics) {
-        List<Player> players = gameController.getPlayers();
+    public void update() {
+        updateActivePlayersAndRedrawWindow(gameController.getPlayers());
+    }
 
+    private void registerInputHandlers() {
+        screenManager.getWindow().addKeyListener(new KeyboardInputListener(gameController));
+    }
+
+    private void updateActivePlayersAndRedrawWindow(List<Player> players) {
+        moveAndCheckPlayerCollisions(players);
+        screenManager.updateWindow(players);
+    }
+
+    private void moveAndCheckPlayerCollisions(List<Player> players) {
+        movePlayersOneStep(players);
+        checkPlayersCollisions(players);
+    }
+
+    private void movePlayersOneStep(List<Player> players) {
         players.forEach(player -> playerController.move(player));
+    }
 
+    private void checkPlayersCollisions(List<Player> players) {
         players.forEach(player -> players.forEach(otherPlayer -> {
             if (collisionDetector.detectCollision(player.getPath(), otherPlayer.getPath())) {
                 System.exit(0);
             }
         }));
-
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, customScreenManager.getWidth(), customScreenManager.getHeight());
-
-        players.forEach(player -> {
-            graphics.setColor(player.getColor());
-            player.getPath().getPoints().forEach(point ->
-                    graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
-        });
     }
-
 }
