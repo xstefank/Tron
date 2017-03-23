@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 /**
  * Controller for the processing of keyboard events
  */
-public interface KeyboardController extends InputController<KeyEvent> {
+public interface KeyboardController extends InputController<KeyEvent, KeyboardAction> {
 
     /**
      * Registers the keyboard event with the defined user action
@@ -15,6 +15,6 @@ public interface KeyboardController extends InputController<KeyEvent> {
      * @param event keyboard event
      * @param action user action to be performed when event occurs
      */
-    void registerKeyboardEvent(KeyEvent event, KeyboardAction action);
+    void registerEvent(KeyEvent event, KeyboardAction action);
 
 }

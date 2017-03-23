@@ -1,5 +1,7 @@
 package cz.muni.fi.pv260.control.controller.keyboard;
 
+import cz.muni.fi.pv260.control.controller.InputController;
+
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
@@ -21,7 +23,7 @@ public class KeyboardControllerImpl implements KeyboardController {
     }
 
     @Override
-    public void registerKeyboardEvent(KeyEvent event, KeyboardAction action) {
+    public void registerEvent(KeyEvent event, KeyboardAction action) {
         keyEvents.putIfAbsent(event.getKeyCode(), action);
     }
 }
