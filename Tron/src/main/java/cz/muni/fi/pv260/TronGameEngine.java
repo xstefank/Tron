@@ -7,8 +7,11 @@ import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.model.Player;
+import cz.muni.fi.pv260.presentation.ScreenManager;
+import cz.muni.fi.pv260.presentation.awt.AWTScreenManager;
 
 import java.awt.Color;
+import java.awt.DisplayMode;
 import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
@@ -29,15 +32,28 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     private GameController gameController = new GameController();
     private PlayerController playerController;
 
+    private ScreenManager<DisplayMode, Window> screenManager;
+
     public static void main(String[] args) {
         new TronGameEngine().run();
+    }
+
+    @Override
+    public void run() {
+        try {
+            super.run();
+        } finally {
+            restoreUserEnvironment();
+        }
     }
 
     @Override
     public void init() {
         super.init();
 
-        Window fullScreenWindow = screenManager.getFullScreenWindow();
+        screenManager = new AWTScreenManager();
+
+        Window fullScreenWindow = screenManager.getWindowManager().getWindow();
         fullScreenWindow.addKeyListener(this);
         fullScreenWindow.addMouseListener(this);
         fullScreenWindow.addMouseMotionListener(this);
@@ -47,7 +63,9 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     }
 
     @Override
-    public void draw(Graphics2D graphics) {
+    public void update() {
+        Graphics2D graphics = (Graphics2D) screenManager.getGraphicsProvider().getGraphics();
+
         List<Player> players = gameController.getPlayers();
 
         players.forEach(player -> playerController.move(player));
@@ -59,13 +77,17 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         }));
 
         graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, screenManager.getWidth(), screenManager.getHeight());
+        graphics.fillRect(0, 0, screenManager.getWindowManager().getWindowWidth(),
+                screenManager.getWindowManager().getWindowHeight());
 
         players.forEach(player -> {
             graphics.setColor(player.getColor());
             player.getPath().getPoints().forEach(point ->
                     graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
         });
+
+        graphics.dispose();
+        screenManager.getWindowManager().updateWindow();
     }
 
     @Override
@@ -112,5 +134,10 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
 
+    }
+
+    private void restoreUserEnvironment() {
+        screenManager.getWindowManager().restoreWindow();
+        screenManager.getDisplayManager().restoreScreen();
     }
 }
