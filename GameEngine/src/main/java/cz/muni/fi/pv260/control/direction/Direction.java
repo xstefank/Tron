@@ -10,12 +10,33 @@ public enum Direction {
         public Direction getOppositeDirection() {
             return DIRECTION_DOWN;
         }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return DIRECTION_RIGHT;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return DIRECTION_LEFT;
+        }
+
     },
 
     DIRECTION_RIGHT(1, 0) {
         @Override
         public Direction getOppositeDirection() {
             return Direction.DIRECTION_LEFT;
+        }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return Direction.DIRECTION_DOWN;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.DIRECTION_UP;
         }
     },
 
@@ -24,12 +45,32 @@ public enum Direction {
         public Direction getOppositeDirection() {
             return Direction.DIRECTION_UP;
         }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return Direction.DIRECTION_LEFT;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.DIRECTION_RIGHT;
+        }
     },
 
     DIRECTION_LEFT(-1, 0) {
         @Override
         public Direction getOppositeDirection() {
             return Direction.DIRECTION_RIGHT;
+        }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return Direction.DIRECTION_UP;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.DIRECTION_DOWN;
         }
     };
 
@@ -41,14 +82,18 @@ public enum Direction {
         this.multiplierY = multiplierY;
     }
 
-    public int getMultiplierX(){
+    public int getMultiplierX() {
         return multiplierX;
     }
 
-    public int getMultiplierY(){
+    public int getMultiplierY() {
         return multiplierY;
     }
 
     public abstract Direction getOppositeDirection();
+
+    public abstract Direction getRightTurnDirection();
+
+    public abstract Direction getLeftTurnDirection();
 
 }

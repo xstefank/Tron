@@ -26,6 +26,16 @@ public interface DirectionControl2D {
     void directDown();
 
     /**
+     * Direct player to the {@link Direction#TO_RIGHT}, if possible
+     */
+    void directTurnRight();
+
+    /**
+     * Direct player to the {@link Direction#TO_LEFT}, if possible
+     */
+    void directTurnLeft();
+
+    /**
      * Returns the current {@link Direction} of the player
      */
     Direction getDirection();
