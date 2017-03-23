@@ -1,8 +1,11 @@
 package cz.muni.fi.pv260.controller;
 
 import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.control.controller.keyboard.KeyboardAction;
 import cz.muni.fi.pv260.control.controller.keyboard.KeyboardController;
 import cz.muni.fi.pv260.control.controller.keyboard.KeyboardControllerBuilder;
+import cz.muni.fi.pv260.control.controller.mouse.MouseController;
+import cz.muni.fi.pv260.control.controller.mouse.MouseControllerBuilder;
 import cz.muni.fi.pv260.control.direction.Direction;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
@@ -10,6 +13,7 @@ import cz.muni.fi.pv260.model.Player;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,17 +31,15 @@ public class GameController {
         DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.DIRECTION_LEFT);
 
         KeyboardController controller1 = new KeyboardControllerBuilder()
-                .addKeyboardEvent(KeyEvent.VK_UP, (e -> player1DirectionControl.directUp()))
-                .addKeyboardEvent(KeyEvent.VK_DOWN, (e -> player1DirectionControl.directDown()))
-                .addKeyboardEvent(KeyEvent.VK_RIGHT, (e -> player1DirectionControl.directRight()))
-                .addKeyboardEvent(KeyEvent.VK_LEFT, (e -> player1DirectionControl.directLeft()))
+                .addEvent(KeyEvent.VK_UP, (e -> player1DirectionControl.directUp()))
+                .addEvent(KeyEvent.VK_DOWN, (e -> player1DirectionControl.directDown()))
+                .addEvent(KeyEvent.VK_RIGHT, (e -> player1DirectionControl.directRight()))
+                .addEvent(KeyEvent.VK_LEFT, (e -> player1DirectionControl.directLeft()))
                 .build();
 
-        KeyboardController controller2 = new KeyboardControllerBuilder()
-                .addKeyboardEvent(KeyEvent.VK_W, (e -> player2DirectionControl.directUp()))
-                .addKeyboardEvent(KeyEvent.VK_S, (e -> player2DirectionControl.directDown()))
-                .addKeyboardEvent(KeyEvent.VK_D, (e -> player2DirectionControl.directRight()))
-                .addKeyboardEvent(KeyEvent.VK_A, (e -> player2DirectionControl.directLeft()))
+        MouseController controller2 = new MouseControllerBuilder()
+                .addEvent(MouseEvent.BUTTON1, (e -> player2DirectionControl.directTurnLeft()))
+                .addEvent(MouseEvent.BUTTON3, (e -> player2DirectionControl.directTurnRight()))
                 .build();
 
         Player player1 = new Player((new Point(40, 40)), player1DirectionControl, controller1, Color.RED);
