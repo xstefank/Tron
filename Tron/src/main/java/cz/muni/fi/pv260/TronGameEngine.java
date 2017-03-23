@@ -5,34 +5,25 @@ import cz.muni.fi.pv260.control.collision.CollisionDetector;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
+import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.model.Player;
-import cz.muni.fi.pv260.presentation.ScreenManager;
-import cz.muni.fi.pv260.presentation.awt.AWTScreenManager;
+import cz.muni.fi.pv260.presentation.TronScreenManagerAdapter;
 
-import java.awt.Color;
-import java.awt.DisplayMode;
-import java.awt.Graphics2D;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 /**
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements KeyListener, MouseListener, MouseMotionListener {
+public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
     private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
 
     private GameController gameController = new GameController();
     private PlayerController playerController;
 
-    private ScreenManager<DisplayMode, Window> screenManager;
+    private TronScreenManagerAdapter screenManager = new TronScreenManagerAdapter();
 
     public static void main(String[] args) {
         new TronGameEngine().run();
@@ -43,7 +34,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
         try {
             super.run();
         } finally {
-            restoreUserEnvironment();
+            screenManager.restoreUserEnvironment();
         }
     }
 
@@ -51,93 +42,39 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine implements Ke
     public void init() {
         super.init();
 
-        screenManager = new AWTScreenManager();
-
-        Window fullScreenWindow = screenManager.getWindowManager().getWindow();
-        fullScreenWindow.addKeyListener(this);
-        fullScreenWindow.addMouseListener(this);
-        fullScreenWindow.addMouseMotionListener(this);
-
         gameController = new GameController();
-        playerController = new PlayerController(fullScreenWindow);
+        playerController = new PlayerController(screenManager.getWindow());
+        registerInputHandlers();
     }
 
     @Override
     public void update() {
-        Graphics2D graphics = (Graphics2D) screenManager.getGraphicsProvider().getGraphics();
+        updateActivePlayersAndRedrawWindow(gameController.getPlayers());
+    }
 
-        List<Player> players = gameController.getPlayers();
+    private void registerInputHandlers() {
+        screenManager.getWindow().addKeyListener(new KeyboardInputListener(gameController));
+    }
 
+    private void updateActivePlayersAndRedrawWindow(List<Player> players) {
+        moveAndCheckPlayerCollisions(players);
+        screenManager.updateWindow(players);
+    }
+
+    private void moveAndCheckPlayerCollisions(List<Player> players) {
+        movePlayersOneStep(players);
+        checkPlayersCollisions(players);
+    }
+
+    private void movePlayersOneStep(List<Player> players) {
         players.forEach(player -> playerController.move(player));
+    }
 
+    private void checkPlayersCollisions(List<Player> players) {
         players.forEach(player -> players.forEach(otherPlayer -> {
             if (collisionDetector.detectCollision(player.getPath(), otherPlayer.getPath())) {
                 System.exit(0);
             }
         }));
-
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, screenManager.getWindowManager().getWindowWidth(),
-                screenManager.getWindowManager().getWindowHeight());
-
-        players.forEach(player -> {
-            graphics.setColor(player.getColor());
-            player.getPath().getPoints().forEach(point ->
-                    graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), 10, 10));
-        });
-
-        graphics.dispose();
-        screenManager.getWindowManager().updateWindow();
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-        gameController.getPlayers().forEach(player -> player.getKeyboardController().processEvent(keyEvent));
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent mouseEvent) {
-
-    }
-
-    private void restoreUserEnvironment() {
-        screenManager.getWindowManager().restoreWindow();
-        screenManager.getDisplayManager().restoreScreen();
     }
 }
