@@ -1,18 +1,24 @@
 package cz.muni.fi.pv260.control.controller.keyboard;
 
+import cz.muni.fi.pv260.control.controller.InputAction;
+import cz.muni.fi.pv260.control.controller.InputControllerBuilder;
+
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class KeyboardControllerBuilder {
+public class KeyboardControllerBuilder implements InputControllerBuilder<InputAction<KeyEvent>> {
 
-    private Map<Integer, KeyboardAction> keyEvents = new HashMap<>();
+    private Map<Integer, InputAction<KeyEvent>> keyEvents = new HashMap<>();
 
-    public KeyboardControllerBuilder addKeyboardEvent(int keyCode, KeyboardAction action) {
+    @Override
+    public KeyboardControllerBuilder addEvent(int keyCode, InputAction<KeyEvent> action) {
         keyEvents.putIfAbsent(keyCode, action);
         return this;
     }
 
-    public KeyboardController build() {
+    @Override
+    public KeyboardControllerImpl build() {
         return new KeyboardControllerImpl(keyEvents);
     }
 

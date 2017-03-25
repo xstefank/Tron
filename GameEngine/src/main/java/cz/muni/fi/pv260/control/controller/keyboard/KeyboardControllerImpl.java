@@ -1,19 +1,22 @@
 package cz.muni.fi.pv260.control.controller.keyboard;
 
+import cz.muni.fi.pv260.control.controller.InputAction;
+import cz.muni.fi.pv260.control.controller.InputController;
+
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
-public class KeyboardControllerImpl implements KeyboardController {
+public class KeyboardControllerImpl implements InputController<KeyEvent> {
 
-    private Map<Integer, KeyboardAction> keyEvents;
+    private Map<Integer, InputAction<KeyEvent>> keyEvents;
 
-    public KeyboardControllerImpl(Map<Integer, KeyboardAction> keyEvents) {
+    public KeyboardControllerImpl(Map<Integer, InputAction<KeyEvent>> keyEvents) {
         this.keyEvents = keyEvents;
     }
 
     @Override
     public void processEvent(KeyEvent event) {
-        KeyboardAction action = keyEvents.get(event.getKeyCode());
+        InputAction<KeyEvent> action = keyEvents.get(event.getKeyCode());
 
         if (action != null) {
             action.executeAction(event);
@@ -21,7 +24,7 @@ public class KeyboardControllerImpl implements KeyboardController {
     }
 
     @Override
-    public void registerKeyboardEvent(KeyEvent event, KeyboardAction action) {
+    public void registerEvent(KeyEvent event, InputAction<KeyEvent> action) {
         keyEvents.putIfAbsent(event.getKeyCode(), action);
     }
 }
