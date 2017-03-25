@@ -6,10 +6,12 @@ import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
+import cz.muni.fi.pv260.controller.listener.MouseInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.model.Player;
 import cz.muni.fi.pv260.presentation.TronScreenManagerAdapter;
 
+import java.awt.Window;
 import java.util.List;
 
 /**
@@ -58,7 +60,9 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
     }
 
     private void registerInputHandlers() {
-        screenManager.getWindow().addKeyListener(new KeyboardInputListener(gameController));
+        Window window = screenManager.getWindow();
+        window.addKeyListener(new KeyboardInputListener(gameController));
+        window.addMouseListener(new MouseInputListener(gameController));
     }
 
     private void updateActivePlayers(List<Player> players) {

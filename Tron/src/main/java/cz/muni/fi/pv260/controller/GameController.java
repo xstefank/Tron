@@ -25,8 +25,8 @@ public class GameController {
     private List<Player> players = new ArrayList<>();
 
     public GameController() {
-        DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.DIRECTION_RIGHT);
-        DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.DIRECTION_LEFT);
+        DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.RIGHT);
+        DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.LEFT);
 
         InputController<KeyEvent> controller1 = new KeyboardControllerBuilder()
                 .addEvent(KeyEvent.VK_UP, (e -> player1DirectionControl.directUp()))

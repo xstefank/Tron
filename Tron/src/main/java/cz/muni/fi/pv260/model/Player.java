@@ -17,11 +17,11 @@ import java.awt.Color;
 public class Player {
 
     private DirectionControl2D directionControl;
-    private InputController inputController;
+    private InputController<?> inputController;
     private TraveledPath path;
     private Color color;
 
-    public Player(Point startingPoint, DirectionControl2D directionControl, InputController inputController, Color color) {
+    public Player(Point startingPoint, DirectionControl2D directionControl, InputController<?> inputController, Color color) {
         this.directionControl = directionControl;
         this.inputController = inputController;
         this.path = new TraveledPathListImpl(startingPoint);
