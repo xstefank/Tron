@@ -17,10 +17,10 @@ public class PlayerController {
     private InputController inputController;
     private Player player;
 
-    public PlayerController(Window window, InputController inputController, Player player) {
-        this.window = window;
-        this.inputController = inputController;
+    public PlayerController(Player player, InputController inputController, Window window) {
         this.player = player;
+        this.inputController = inputController;
+        this.window = window;
     }
 
     public void move() {

@@ -28,21 +28,11 @@ public class GameData {
     private List<PlayerController> mouseControllers = new ArrayList<>();
 
     public GameData(Window window) {
-        DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.RIGHT);
-        DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.LEFT);
+        Player player1 = createPlayer(Direction.RIGHT, 40, 40, Color.RED);
+        Player player2 = createPlayer(Direction.LEFT, 600, 440, Color.BLUE);
 
-        InputController<KeyEvent> controller1 = AWTControllerFactory.newArrows2DController(player1DirectionControl);
-
-        InputController<MouseEvent> controller2 = AWTControllerFactory.newMouseButtonController(player2DirectionControl);
-
-        Player player1 = new Player((new Point(40, 40)), player1DirectionControl, Color.RED);
-        Player player2 = new Player((new Point(600, 440)), player2DirectionControl, Color.BLUE);
-
-        players.add(player1);
-        players.add(player2);
-
-        keyboardControllers.add(new PlayerController(window, controller1, player1));
-        mouseControllers.add(new PlayerController(window, controller2, player2));
+        registerKeyboardPlayer(player1, AWTControllerFactory.newArrows2DController(player1.getDirectionControl()), window);
+        registerMousePlayer(player2, AWTControllerFactory.newMouseButtonController(player2.getDirectionControl()), window);
     }
 
     public List<PlayerController> getPlayerControllers() {
@@ -58,5 +48,19 @@ public class GameData {
 
     public List<PlayerController> getMouseControllers() {
         return mouseControllers;
+    }
+
+    private void registerMousePlayer(Player player, InputController<MouseEvent> controller, Window window) {
+        players.add(player);
+        mouseControllers.add(new PlayerController(player, controller, window));
+    }
+
+    private void registerKeyboardPlayer(Player player, InputController<KeyEvent> controller, Window window) {
+        players.add(player);
+        keyboardControllers.add(new PlayerController(player, controller, window));
+    }
+
+    private Player createPlayer(Direction startDirection, int startX, int startY, Color color) {
+        return new Player(new Point(startX, startY), new DirectionControl2DImpl(startDirection), color);
     }
 }
