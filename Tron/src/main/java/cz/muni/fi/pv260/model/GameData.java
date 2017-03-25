@@ -1,9 +1,9 @@
 package cz.muni.fi.pv260.model;
 
 import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.control.controller.awt.AWTControllerFactory;
 import cz.muni.fi.pv260.control.controller.InputController;
-import cz.muni.fi.pv260.control.controller.keyboard.KeyboardControllerBuilder;
-import cz.muni.fi.pv260.control.controller.mouse.MouseControllerBuilder;
+import cz.muni.fi.pv260.control.controller.awt.mouse.MouseControllerBuilder;
 import cz.muni.fi.pv260.control.direction.Direction;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
@@ -31,17 +31,9 @@ public class GameData {
         DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.RIGHT);
         DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.LEFT);
 
-        InputController<KeyEvent> controller1 = new KeyboardControllerBuilder()
-                .addEvent(KeyEvent.VK_UP, (e -> player1DirectionControl.directUp()))
-                .addEvent(KeyEvent.VK_DOWN, (e -> player1DirectionControl.directDown()))
-                .addEvent(KeyEvent.VK_RIGHT, (e -> player1DirectionControl.directRight()))
-                .addEvent(KeyEvent.VK_LEFT, (e -> player1DirectionControl.directLeft()))
-                .build();
+        InputController<KeyEvent> controller1 = AWTControllerFactory.newArrows2DController(player1DirectionControl);
 
-        InputController<MouseEvent> controller2 = new MouseControllerBuilder()
-                .addEvent(MouseEvent.BUTTON1, (e -> player2DirectionControl.directTurnLeft()))
-                .addEvent(MouseEvent.BUTTON3, (e -> player2DirectionControl.directTurnRight()))
-                .build();
+        InputController<MouseEvent> controller2 = AWTControllerFactory.newMouseButtonController(player2DirectionControl);
 
         Player player1 = new Player((new Point(40, 40)), player1DirectionControl, Color.RED);
         Player player2 = new Player((new Point(600, 440)), player2DirectionControl, Color.BLUE);

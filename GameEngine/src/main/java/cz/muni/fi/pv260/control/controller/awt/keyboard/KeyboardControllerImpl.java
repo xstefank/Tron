@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.control.controller.keyboard;
+package cz.muni.fi.pv260.control.controller.awt.keyboard;
 
 import cz.muni.fi.pv260.control.controller.InputAction;
 import cz.muni.fi.pv260.control.controller.InputController;

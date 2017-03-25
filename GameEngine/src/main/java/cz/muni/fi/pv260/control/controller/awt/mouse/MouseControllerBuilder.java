@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.control.controller.mouse;
+package cz.muni.fi.pv260.control.controller.awt.mouse;
 
 import cz.muni.fi.pv260.control.controller.InputAction;
 import cz.muni.fi.pv260.control.controller.InputControllerBuilder;

@@ -1,7 +1,5 @@
 package cz.muni.fi.pv260.controller.listener;
 
-import cz.muni.fi.pv260.control.controller.InputController;
-import cz.muni.fi.pv260.control.controller.mouse.MouseControllerImpl;
 import cz.muni.fi.pv260.model.GameData;
 
 import java.awt.event.MouseEvent;
