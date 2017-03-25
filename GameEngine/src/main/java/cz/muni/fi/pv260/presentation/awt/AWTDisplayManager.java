@@ -1,7 +1,5 @@
 package cz.muni.fi.pv260.presentation.awt;
 
-import cz.muni.fi.pv260.presentation.DisplayManager;
-
 import javax.swing.JFrame;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
@@ -9,7 +7,7 @@ import java.awt.GraphicsDevice;
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class AWTDisplayManager implements DisplayManager<DisplayMode> {
+public class AWTDisplayManager {
 
     private static final DisplayMode DISPLAY_MODES[] = {
             new DisplayMode(1680, 1050, 32, 0),
@@ -29,12 +27,10 @@ public class AWTDisplayManager implements DisplayManager<DisplayMode> {
         setFullScreen(displayMode);
     }
 
-    @Override
     public DisplayMode[] getCompatibleDisplayModes() {
         return graphicsDevice.getDisplayModes();
     }
 
-    @Override
     public DisplayMode findCompatibleDisplayMode(DisplayMode[] displayModes) {
 
         DisplayMode compatibleDisplayModes[] = getCompatibleDisplayModes();
@@ -49,7 +45,6 @@ public class AWTDisplayManager implements DisplayManager<DisplayMode> {
         return null;
     }
 
-    @Override
     public void setFullScreen(DisplayMode displayMode) {
         JFrame frame = new JFrame();
         frame.setUndecorated(true);
@@ -67,7 +62,6 @@ public class AWTDisplayManager implements DisplayManager<DisplayMode> {
         }
     }
 
-    @Override
     public void restoreScreen() {
         graphicsDevice.setFullScreenWindow(null);
     }

@@ -1,16 +1,13 @@
 package cz.muni.fi.pv260.presentation.awt;
 
-import cz.muni.fi.pv260.presentation.GraphicsProvider;
-
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Window;
 import java.awt.image.BufferStrategy;
 
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class AWTGraphicsProvider implements GraphicsProvider {
+public class AWTGraphicsProvider {
 
     private Window window;
 
@@ -18,7 +15,6 @@ public class AWTGraphicsProvider implements GraphicsProvider {
         this.window = window;
     }
 
-    @Override
     public Graphics getGraphics() {
         if (window != null) {
             BufferStrategy bufferStrategy = window.getBufferStrategy();

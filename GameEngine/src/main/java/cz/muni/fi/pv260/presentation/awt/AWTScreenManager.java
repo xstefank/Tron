@@ -1,23 +1,16 @@
 package cz.muni.fi.pv260.presentation.awt;
 
-import cz.muni.fi.pv260.presentation.DisplayManager;
-import cz.muni.fi.pv260.presentation.GraphicsProvider;
-import cz.muni.fi.pv260.presentation.ScreenManager;
-import cz.muni.fi.pv260.presentation.WindowManager;
-
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.Window;
 
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class AWTScreenManager implements ScreenManager<DisplayMode, Window> {
+public class AWTScreenManager {
 
-    private DisplayManager<DisplayMode> displayManager;
-    private WindowManager<Window> windowManager;
-    private GraphicsProvider graphicsProvider;
+    private AWTDisplayManager displayManager;
+    private AWTWindowManager windowManager;
+    private AWTGraphicsProvider graphicsProvider;
 
     public AWTScreenManager() {
         GraphicsEnvironment localGraphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -28,18 +21,15 @@ public class AWTScreenManager implements ScreenManager<DisplayMode, Window> {
         this.graphicsProvider = new AWTGraphicsProvider(windowManager.getWindow());
     }
 
-    @Override
-    public DisplayManager<DisplayMode> getDisplayManager() {
+    public AWTDisplayManager getDisplayManager() {
         return displayManager;
     }
 
-    @Override
-    public WindowManager<Window> getWindowManager() {
+    public AWTWindowManager getWindowManager() {
         return windowManager;
     }
 
-    @Override
-    public GraphicsProvider getGraphicsProvider() {
+    public AWTGraphicsProvider getGraphicsProvider() {
         return graphicsProvider;
     }
 }

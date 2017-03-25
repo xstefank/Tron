@@ -49,16 +49,20 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
     @Override
     public void update() {
-        updateActivePlayersAndRedrawWindow(gameController.getPlayers());
+        updateActivePlayers(gameController.getPlayers());
+    }
+
+    @Override
+    public void redrawWindow() {
+        screenManager.updateWindow(gameController.getPlayers());
     }
 
     private void registerInputHandlers() {
         screenManager.getWindow().addKeyListener(new KeyboardInputListener(gameController));
     }
 
-    private void updateActivePlayersAndRedrawWindow(List<Player> players) {
+    private void updateActivePlayers(List<Player> players) {
         moveAndCheckPlayerCollisions(players);
-        screenManager.updateWindow(players);
     }
 
     private void moveAndCheckPlayerCollisions(List<Player> players) {
