@@ -15,22 +15,32 @@ public class DirectionControl2DImpl implements DirectionControl2D {
 
     @Override
     public void directRight() {
-        setDirection(Direction.DIRECTION_RIGHT);
+        setDirection(Direction.RIGHT);
     }
 
     @Override
     public void directLeft() {
-        setDirection(Direction.DIRECTION_LEFT);
+        setDirection(Direction.LEFT);
     }
 
     @Override
     public void directUp() {
-        setDirection(Direction.DIRECTION_UP);
+        setDirection(Direction.UP);
     }
 
     @Override
     public void directDown() {
-        setDirection(Direction.DIRECTION_DOWN);
+        setDirection(Direction.DOWN);
+    }
+
+    @Override
+    public void directTurnRight() {
+        setDirection(currentDirection.getRightTurnDirection());
+    }
+
+    @Override
+    public void directTurnLeft() {
+        setDirection(currentDirection.getLeftTurnDirection());
     }
 
     @Override

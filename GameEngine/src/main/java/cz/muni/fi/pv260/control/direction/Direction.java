@@ -5,31 +5,72 @@ package cz.muni.fi.pv260.control.direction;
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
 public enum Direction {
-    DIRECTION_UP(0, -1) {
+    UP(0, -1) {
         @Override
         public Direction getOppositeDirection() {
-            return DIRECTION_DOWN;
+            return DOWN;
+        }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return RIGHT;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return LEFT;
+        }
+
+    },
+
+    RIGHT(1, 0) {
+        @Override
+        public Direction getOppositeDirection() {
+            return Direction.LEFT;
+        }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return Direction.DOWN;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.UP;
         }
     },
 
-    DIRECTION_RIGHT(1, 0) {
+    DOWN(0, 1) {
         @Override
         public Direction getOppositeDirection() {
-            return Direction.DIRECTION_LEFT;
+            return Direction.UP;
+        }
+
+        @Override
+        public Direction getRightTurnDirection() {
+            return Direction.LEFT;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.RIGHT;
         }
     },
 
-    DIRECTION_DOWN(0, 1) {
+    LEFT(-1, 0) {
         @Override
         public Direction getOppositeDirection() {
-            return Direction.DIRECTION_UP;
+            return Direction.RIGHT;
         }
-    },
 
-    DIRECTION_LEFT(-1, 0) {
         @Override
-        public Direction getOppositeDirection() {
-            return Direction.DIRECTION_RIGHT;
+        public Direction getRightTurnDirection() {
+            return Direction.UP;
+        }
+
+        @Override
+        public Direction getLeftTurnDirection() {
+            return Direction.DOWN;
         }
     };
 
@@ -41,14 +82,18 @@ public enum Direction {
         this.multiplierY = multiplierY;
     }
 
-    public int getMultiplierX(){
+    public int getMultiplierX() {
         return multiplierX;
     }
 
-    public int getMultiplierY(){
+    public int getMultiplierY() {
         return multiplierY;
     }
 
     public abstract Direction getOppositeDirection();
+
+    public abstract Direction getRightTurnDirection();
+
+    public abstract Direction getLeftTurnDirection();
 
 }
