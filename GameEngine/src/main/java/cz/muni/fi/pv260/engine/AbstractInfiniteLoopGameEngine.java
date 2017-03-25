@@ -1,6 +1,6 @@
 package cz.muni.fi.pv260.engine;
 
-public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGameEngine {
+public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
     private static final int DEFAULT_SLEEP_TIME = 20;
 
@@ -26,14 +26,6 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
         frameTimer.stopTimer();
     }
 
-    @Override
-    public void onLoopStart() {
-    }
-
-    @Override
-    public void onLoopEnd() {
-    }
-
     private void startGame() {
         frameTimer.startTimer();
     }
@@ -46,9 +38,8 @@ public abstract class AbstractInfiniteLoopGameEngine implements InfiniteLoopGame
 
         @Override
         public void renderFrame() {
-            onLoopStart();
             update();
-            onLoopEnd();
+            redrawWindow();
         }
     }
 
