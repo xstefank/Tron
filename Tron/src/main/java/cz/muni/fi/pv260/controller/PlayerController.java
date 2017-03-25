@@ -1,7 +1,9 @@
 package cz.muni.fi.pv260.controller;
 
 import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.control.controller.InputController;
 import cz.muni.fi.pv260.model.Player;
+
 import java.awt.Window;
 
 /**
@@ -12,17 +14,30 @@ public class PlayerController {
     private static final int MOVE_LENGTH = 5;
     private Window window;
 
-    public PlayerController(Window window) {
+    private InputController inputController;
+    private Player player;
+
+    public PlayerController(Window window, InputController inputController, Player player) {
         this.window = window;
+        this.inputController = inputController;
+        this.player = player;
     }
 
-    public void move(Player player) {
+    public void move() {
         int moveX = player.getDirectionControl().getDirection().getMultiplierX() * MOVE_LENGTH;
         int moveY = player.getDirectionControl().getDirection().getMultiplierY() * MOVE_LENGTH;
-        adjustPosition(player, moveX, moveY);
+        adjustPosition(moveX, moveY);
     }
 
-    private void adjustPosition(Player player, int moveX, int moveY) {
+    public void processInputEvent(Object event) {
+        inputController.processEvent(event);
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    private void adjustPosition(int moveX, int moveY) {
         Point position = player.getPosition();
         int coordinateX = position.getCoordinateX() + moveX;
         int coordinateY = position.getCoordinateY() + moveY;
@@ -35,6 +50,5 @@ public class PlayerController {
 
         player.getPath().addPointToPath(new Point(coordinateX, coordinateY));
     }
-
 
 }

@@ -1,8 +1,6 @@
 package cz.muni.fi.pv260.controller.listener;
 
-import cz.muni.fi.pv260.control.controller.InputController;
-import cz.muni.fi.pv260.control.controller.keyboard.KeyboardControllerImpl;
-import cz.muni.fi.pv260.controller.GameController;
+import cz.muni.fi.pv260.model.GameData;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,21 +10,15 @@ import java.awt.event.KeyListener;
  */
 public class KeyboardInputListener implements KeyListener {
 
-    private GameController gameController;
+    private GameData gameData;
 
-    public KeyboardInputListener(GameController gameController) {
-        this.gameController = gameController;
+    public KeyboardInputListener(GameData gameData) {
+        this.gameData = gameData;
     }
 
     @Override
     public void keyPressed(KeyEvent event) {
-        gameController.getPlayers().forEach(player -> {
-            InputController inputController = player.getInputController();
-            // TODO: potential violation of some SOLID rules
-            if (inputController instanceof KeyboardControllerImpl) {
-                inputController.processEvent(event);
-            }
-        });
+        gameData.getKeyboardControllers().forEach(playerController -> playerController.processInputEvent(event));
     }
 
     @Override

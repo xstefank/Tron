@@ -3,11 +3,9 @@ package cz.muni.fi.pv260.model;
 import cz.muni.fi.pv260.control.collision.Point;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
 import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
-import cz.muni.fi.pv260.control.controller.InputController;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 
 import java.awt.Color;
-
 
 /**
  * Class representing a player in the game.
@@ -17,13 +15,11 @@ import java.awt.Color;
 public class Player {
 
     private DirectionControl2D directionControl;
-    private InputController<?> inputController;
     private TraveledPath path;
     private Color color;
 
-    public Player(Point startingPoint, DirectionControl2D directionControl, InputController<?> inputController, Color color) {
+    public Player(Point startingPoint, DirectionControl2D directionControl, Color color) {
         this.directionControl = directionControl;
-        this.inputController = inputController;
         this.path = new TraveledPathListImpl(startingPoint);
         this.color = color;
     }
@@ -38,10 +34,6 @@ public class Player {
 
     public DirectionControl2D getDirectionControl() {
         return this.directionControl;
-    }
-
-    public InputController getInputController() {
-        return this.inputController;
     }
 
     public TraveledPath getPath() {

@@ -2,7 +2,7 @@ package cz.muni.fi.pv260.controller.listener;
 
 import cz.muni.fi.pv260.control.controller.InputController;
 import cz.muni.fi.pv260.control.controller.mouse.MouseControllerImpl;
-import cz.muni.fi.pv260.controller.GameController;
+import cz.muni.fi.pv260.model.GameData;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,21 +12,15 @@ import java.awt.event.MouseListener;
  */
 public class MouseInputListener implements MouseListener {
 
-    private GameController gameController;
+    private GameData gameData;
 
-    public MouseInputListener(GameController gameController) {
-        this.gameController = gameController;
+    public MouseInputListener(GameData gameData) {
+        this.gameData = gameData;
     }
 
     @Override
     public void mouseClicked(MouseEvent event) {
-        gameController.getPlayers().forEach(player -> {
-            InputController inputController = player.getInputController();
-            // TODO: potential violation of some SOLID rules
-            if (inputController instanceof MouseControllerImpl) {
-                inputController.processEvent(event);
-            }
-        });
+        gameData.getMouseControllers().forEach(playerController -> playerController.processInputEvent(event));
     }
 
     @Override

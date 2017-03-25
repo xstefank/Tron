@@ -1,4 +1,4 @@
-package cz.muni.fi.pv260.controller;
+package cz.muni.fi.pv260.model;
 
 import cz.muni.fi.pv260.control.collision.Point;
 import cz.muni.fi.pv260.control.controller.InputController;
@@ -7,9 +7,10 @@ import cz.muni.fi.pv260.control.controller.mouse.MouseControllerBuilder;
 import cz.muni.fi.pv260.control.direction.Direction;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 import cz.muni.fi.pv260.control.direction.DirectionControl2DImpl;
-import cz.muni.fi.pv260.model.Player;
+import cz.muni.fi.pv260.controller.PlayerController;
 
 import java.awt.Color;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -20,11 +21,13 @@ import java.util.List;
  *
  * @author <a href="mailto:umarekk@gmail.com">Marek Urban</a>
  */
-public class GameController {
+public class GameData {
 
     private List<Player> players = new ArrayList<>();
+    private List<PlayerController> keyboardControllers = new ArrayList<>();
+    private List<PlayerController> mouseControllers = new ArrayList<>();
 
-    public GameController() {
+    public GameData(Window window) {
         DirectionControl2D player1DirectionControl = new DirectionControl2DImpl(Direction.RIGHT);
         DirectionControl2D player2DirectionControl = new DirectionControl2DImpl(Direction.LEFT);
 
@@ -40,15 +43,28 @@ public class GameController {
                 .addEvent(MouseEvent.BUTTON3, (e -> player2DirectionControl.directTurnRight()))
                 .build();
 
-        Player player1 = new Player((new Point(40, 40)), player1DirectionControl, controller1, Color.RED);
-        Player player2 = new Player((new Point(600, 440)), player2DirectionControl, controller2, Color.BLUE);
+        Player player1 = new Player((new Point(40, 40)), player1DirectionControl, Color.RED);
+        Player player2 = new Player((new Point(600, 440)), player2DirectionControl, Color.BLUE);
 
         players.add(player1);
         players.add(player2);
+
+        keyboardControllers.add(new PlayerController(window, controller1, player1));
+        mouseControllers.add(new PlayerController(window, controller2, player2));
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public List<PlayerController> getPlayerControllers() {
+        List<PlayerController> controllers = new ArrayList<>();
+        keyboardControllers.forEach(controllers::add);
+        mouseControllers.forEach(controllers::add);
+        return controllers;
     }
 
+    public List<PlayerController> getKeyboardControllers() {
+        return keyboardControllers;
+    }
+
+    public List<PlayerController> getMouseControllers() {
+        return mouseControllers;
+    }
 }

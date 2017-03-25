@@ -3,8 +3,8 @@ package cz.muni.fi.pv260;
 import cz.muni.fi.pv260.collision.TronCollisionDetector;
 import cz.muni.fi.pv260.control.collision.CollisionDetector;
 import cz.muni.fi.pv260.control.collision.TraveledPath;
-import cz.muni.fi.pv260.controller.GameController;
 import cz.muni.fi.pv260.controller.PlayerController;
+import cz.muni.fi.pv260.model.GameData;
 import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
 import cz.muni.fi.pv260.controller.listener.MouseInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
@@ -22,8 +22,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
     private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
 
-    private GameController gameController = new GameController();
-    private PlayerController playerController;
+    private GameData gameData;
 
     private TronScreenManagerAdapter screenManager = new TronScreenManagerAdapter();
 
@@ -44,43 +43,39 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
     public void init() {
         super.init();
 
-        gameController = new GameController();
-        playerController = new PlayerController(screenManager.getWindow());
+        gameData = new GameData(screenManager.getWindow());
         registerInputHandlers();
     }
 
     @Override
     public void update() {
-        updateActivePlayers(gameController.getPlayers());
+        moveAndCheckPlayerCollisions(gameData.getPlayerControllers());
     }
 
     @Override
     public void redrawWindow() {
-        screenManager.updateWindow(gameController.getPlayers());
+        screenManager.updateWindow(gameData.getPlayerControllers());
     }
 
     private void registerInputHandlers() {
         Window window = screenManager.getWindow();
-        window.addKeyListener(new KeyboardInputListener(gameController));
-        window.addMouseListener(new MouseInputListener(gameController));
+        window.addKeyListener(new KeyboardInputListener(gameData));
+        window.addMouseListener(new MouseInputListener(gameData));
     }
 
-    private void updateActivePlayers(List<Player> players) {
-        moveAndCheckPlayerCollisions(players);
+    private void moveAndCheckPlayerCollisions(List<PlayerController> playerControllers) {
+        movePlayersOneStep(playerControllers);
+        checkPlayersCollisions(playerControllers);
     }
 
-    private void moveAndCheckPlayerCollisions(List<Player> players) {
-        movePlayersOneStep(players);
-        checkPlayersCollisions(players);
+    private void movePlayersOneStep(List<PlayerController> playerControllers) {
+        playerControllers.forEach(PlayerController::move);
     }
 
-    private void movePlayersOneStep(List<Player> players) {
-        players.forEach(player -> playerController.move(player));
-    }
-
-    private void checkPlayersCollisions(List<Player> players) {
-        players.forEach(player -> players.forEach(otherPlayer -> {
-            if (collisionDetector.detectCollision(player.getPath(), otherPlayer.getPath())) {
+    private void checkPlayersCollisions(List<PlayerController> playerControllers) {
+        playerControllers.forEach(controller -> playerControllers.forEach(otherController -> {
+            if (collisionDetector
+                    .detectCollision(controller.getPlayer().getPath(), otherController.getPlayer().getPath())) {
                 System.exit(0);
             }
         }));

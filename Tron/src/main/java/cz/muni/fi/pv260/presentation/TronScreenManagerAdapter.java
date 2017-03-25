@@ -1,5 +1,6 @@
 package cz.muni.fi.pv260.presentation;
 
+import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.model.Player;
 import cz.muni.fi.pv260.presentation.awt.AWTPresentationAdapter;
 
@@ -14,20 +15,21 @@ public class TronScreenManagerAdapter extends AWTPresentationAdapter {
 
     private static final int PLAYER_SIZE = 10;
 
-    public void updateWindow(List<Player> players) {
-        fillBackgroundAndDrawPlayers(players);
+    public void updateWindow(List<PlayerController> playerControllers) {
+        fillBackgroundAndDrawPlayers(playerControllers);
         renderWindow();
     }
 
-    private void fillBackgroundAndDrawPlayers(List<Player> players) {
+    private void fillBackgroundAndDrawPlayers(List<PlayerController> playerControllers) {
         Graphics2D graphics = getGraphics();
         fillBackgroundWithColor(graphics, Color.BLACK);
-        drawPlayerPaths(players, graphics);
+        drawPlayerPaths(playerControllers, graphics);
         graphics.dispose();
     }
 
-    private void drawPlayerPaths(List<Player> players, Graphics2D graphics) {
-        players.forEach(player -> {
+    private void drawPlayerPaths(List<PlayerController> playerControllers, Graphics2D graphics) {
+        playerControllers.forEach(playerController -> {
+            Player player = playerController.getPlayer();
             graphics.setColor(player.getColor());
             player.getPath().getPoints().forEach(point ->
                     graphics.fillRect(point.getCoordinateX(), point.getCoordinateY(), PLAYER_SIZE, PLAYER_SIZE));
