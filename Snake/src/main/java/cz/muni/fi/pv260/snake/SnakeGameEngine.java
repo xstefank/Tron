@@ -1,6 +1,7 @@
 package cz.muni.fi.pv260.snake;
 
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
+import cz.muni.fi.pv260.snake.model.GameData;
 import cz.muni.fi.pv260.snake.presentation.SnakeScreenManager;
 
 /**
@@ -8,6 +9,7 @@ import cz.muni.fi.pv260.snake.presentation.SnakeScreenManager;
  */
 public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
 
+    private GameData gameData;
     private SnakeScreenManager screenManager = new SnakeScreenManager();
 
     public static void main(String[] args) {
@@ -24,12 +26,17 @@ public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
     }
 
     @Override
+    public void init() {
+        gameData = new GameData();
+    }
+
+    @Override
     public void update() {
 
     }
 
     @Override
     public void redrawWindow() {
-        screenManager.updateWindow();
+        screenManager.updateWindow(gameData);
     }
 }
