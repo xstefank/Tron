@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class PathCollisionDetector implements CollisionDetector<Path> {
+public class PathCollisionDetector implements CollisionDetector<Path, Path> {
 
     @Override
     public boolean detectCollision(Path path1, Path path2) {
@@ -18,16 +18,6 @@ public class PathCollisionDetector implements CollisionDetector<Path> {
                 if (point1.equals(point2)) {
                     return true;
                 }
-            }
-        }
-
-        return false;
-    }
-
-    public boolean detectCollistionWithPoint(Path path, Point point) {
-        for (Point pathPoint : path.getPoints()) {
-            if (pathPoint.equals(point)) {
-                return true;
             }
         }
 

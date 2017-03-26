@@ -2,6 +2,7 @@ package cz.muni.fi.pv260.control.collision;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  */
 public class PathListImpl implements Path {
 
-    private List<Point> traveledPoints = new ArrayList<>();
+    private LinkedList<Point> traveledPoints = new LinkedList<>();
 
     public PathListImpl() {
     }
@@ -20,12 +21,12 @@ public class PathListImpl implements Path {
 
     @Override
     public void addPointToPath(Point point) {
-        traveledPoints.add(point);
+        traveledPoints.addFirst(point);
     }
 
     @Override
     public void removeLastPointFromPath() {
-        traveledPoints.remove(0);
+        traveledPoints.removeLast();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class PathListImpl implements Path {
 
     @Override
     public Point getHeadPosition() {
-        return traveledPoints.get(getLength() - 1);
+        return traveledPoints.getFirst();
     }
 
     @Override
@@ -46,7 +47,7 @@ public class PathListImpl implements Path {
     @Override
     public List<Point> getPathTail() {
         List<Point> tail = new ArrayList<>(traveledPoints);
-        tail.remove(getLength() - 1);
+        tail.remove(getHeadPosition());
         return Collections.unmodifiableList(tail);
     }
 }

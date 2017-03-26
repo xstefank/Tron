@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class TronCollisionDetector implements CollisionDetector<Path> {
+public class TronCollisionDetector implements CollisionDetector<Path, Path> {
 
     @Override
     public boolean detectCollision(Path pathPlayer1, Path pathPlayer2) {

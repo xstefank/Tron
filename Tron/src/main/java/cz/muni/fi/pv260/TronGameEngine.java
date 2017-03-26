@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
-    private CollisionDetector<Path> collisionDetector = new TronCollisionDetector();
+    private CollisionDetector<Path, Path> collisionDetector = new TronCollisionDetector();
 
     private GameData gameData;
 
