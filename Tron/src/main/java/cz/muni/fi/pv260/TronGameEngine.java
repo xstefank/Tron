@@ -2,13 +2,12 @@ package cz.muni.fi.pv260;
 
 import cz.muni.fi.pv260.collision.TronCollisionDetector;
 import cz.muni.fi.pv260.control.collision.CollisionDetector;
-import cz.muni.fi.pv260.control.collision.TraveledPath;
+import cz.muni.fi.pv260.control.collision.Path;
 import cz.muni.fi.pv260.controller.PlayerController;
 import cz.muni.fi.pv260.model.GameData;
 import cz.muni.fi.pv260.controller.listener.KeyboardInputListener;
 import cz.muni.fi.pv260.controller.listener.MouseInputListener;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
-import cz.muni.fi.pv260.model.Player;
 import cz.muni.fi.pv260.presentation.TronScreenManagerAdapter;
 
 import java.awt.Window;
@@ -20,7 +19,7 @@ import java.util.List;
  */
 public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
 
-    private CollisionDetector<TraveledPath> collisionDetector = new TronCollisionDetector();
+    private CollisionDetector<Path> collisionDetector = new TronCollisionDetector();
 
     private GameData gameData;
 

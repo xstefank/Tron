@@ -1,19 +1,18 @@
 package cz.muni.fi.pv260.collision;
 
 import cz.muni.fi.pv260.control.collision.CollisionDetector;
-import cz.muni.fi.pv260.control.collision.PathCollisionDetector;
 import cz.muni.fi.pv260.control.collision.Point;
-import cz.muni.fi.pv260.control.collision.TraveledPath;
+import cz.muni.fi.pv260.control.collision.Path;
 
 import java.util.List;
 
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class TronCollisionDetector implements CollisionDetector<TraveledPath> {
+public class TronCollisionDetector implements CollisionDetector<Path> {
 
     @Override
-    public boolean detectCollision(TraveledPath pathPlayer1, TraveledPath pathPlayer2) {
+    public boolean detectCollision(Path pathPlayer1, Path pathPlayer2) {
 
         List<Point> path1 = pathPlayer1.getPathTail();
         List<Point> path2 = pathPlayer2.getPathTail();

@@ -7,20 +7,25 @@ import java.util.List;
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class TraveledPathListImpl implements TraveledPath {
+public class PathListImpl implements Path {
 
     private List<Point> traveledPoints = new ArrayList<>();
 
-    public TraveledPathListImpl() {
+    public PathListImpl() {
     }
 
-    public TraveledPathListImpl(Point startionPosition) {
+    public PathListImpl(Point startionPosition) {
         addPointToPath(startionPosition);
     }
 
     @Override
     public void addPointToPath(Point point) {
         traveledPoints.add(point);
+    }
+
+    @Override
+    public void removeLastPointFromPath() {
+        traveledPoints.remove(0);
     }
 
     @Override

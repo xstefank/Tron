@@ -3,13 +3,12 @@ package cz.muni.fi.pv260.control.collision;
 import java.util.List;
 
 /**
- * Interface for the accessing and adding point to paths.
- * Can be used in snake like games when collisions with
- * the traveled path needs to be detected
+ * Interface for the accessing, adding and removing point to paths.
+ * Represents a continuous line of points.
  *
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public interface TraveledPath {
+public interface Path {
 
     /**
      * Adds a {@link Point} to the path. Boundaries
@@ -17,6 +16,12 @@ public interface TraveledPath {
      * @param point to add
      */
     void addPointToPath(Point point);
+
+    /**
+     * Removes the last point from the path. It can be used
+     * when the path as a whole is moving.
+     */
+    void removeLastPointFromPath();
 
     /**
      * Returns individual points in the path

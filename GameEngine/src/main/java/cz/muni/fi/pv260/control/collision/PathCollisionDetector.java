@@ -5,10 +5,10 @@ import java.util.List;
 /**
  * @author <a href="mailto:xstefank122@gmail.com">Martin Stefanko</a>
  */
-public class PathCollisionDetector implements CollisionDetector<TraveledPath> {
+public class PathCollisionDetector implements CollisionDetector<Path> {
 
     @Override
-    public boolean detectCollision(TraveledPath path1, TraveledPath path2) {
+    public boolean detectCollision(Path path1, Path path2) {
 
         List<Point> pathPonts1 = path1.getPoints();
         List<Point> pathPonts2 = path2.getPoints();
@@ -24,7 +24,7 @@ public class PathCollisionDetector implements CollisionDetector<TraveledPath> {
         return false;
     }
 
-    public boolean detectCollistionWithPoint(TraveledPath path, Point point) {
+    public boolean detectCollistionWithPoint(Path path, Point point) {
         for (Point pathPoint : path.getPoints()) {
             if (pathPoint.equals(point)) {
                 return true;

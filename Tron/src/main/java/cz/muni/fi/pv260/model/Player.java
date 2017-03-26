@@ -1,8 +1,8 @@
 package cz.muni.fi.pv260.model;
 
 import cz.muni.fi.pv260.control.collision.Point;
-import cz.muni.fi.pv260.control.collision.TraveledPath;
-import cz.muni.fi.pv260.control.collision.TraveledPathListImpl;
+import cz.muni.fi.pv260.control.collision.Path;
+import cz.muni.fi.pv260.control.collision.PathListImpl;
 import cz.muni.fi.pv260.control.direction.DirectionControl2D;
 
 import java.awt.Color;
@@ -15,12 +15,12 @@ import java.awt.Color;
 public class Player {
 
     private DirectionControl2D directionControl;
-    private TraveledPath path;
+    private Path path;
     private Color color;
 
     public Player(Point startingPoint, DirectionControl2D directionControl, Color color) {
         this.directionControl = directionControl;
-        this.path = new TraveledPathListImpl(startingPoint);
+        this.path = new PathListImpl(startingPoint);
         this.color = color;
     }
 
@@ -36,7 +36,7 @@ public class Player {
         return this.directionControl;
     }
 
-    public TraveledPath getPath() {
+    public Path getPath() {
         return this.path;
     }
 
