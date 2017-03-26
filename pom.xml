@@ -11,6 +11,7 @@
     <modules>
         <module>GameEngine</module>
         <module>Tron</module>
+        <module>Snake</module>
     </modules>
 
     <properties>
