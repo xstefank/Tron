@@ -1,6 +1,7 @@
 package cz.muni.fi.pv260.snake;
 
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
+import cz.muni.fi.pv260.snake.listener.KeyboardListener;
 import cz.muni.fi.pv260.snake.model.GameData;
 import cz.muni.fi.pv260.snake.presentation.SnakeScreenManager;
 
@@ -28,6 +29,7 @@ public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
     @Override
     public void init() {
         gameData = new GameData(screenManager.getWindow());
+        screenManager.getWindow().addKeyListener(new KeyboardListener(gameData));
     }
 
     @Override

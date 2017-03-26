@@ -50,6 +50,7 @@ public class SnakeController {
         coordinateY = coordinateY < 0 ? window.getHeight() : coordinateY;
 
         snake.getBody().addPointToPath(new Point(coordinateX, coordinateY));
+        snake.getBody().removeLastPointFromPath();
     }
 
 }
