@@ -32,6 +32,10 @@ public class Snake {
         return body;
     }
 
+    public Point getPosition() {
+        return body.getHeadPosition();
+    }
+
     public Color getColor() {
         return color;
     }

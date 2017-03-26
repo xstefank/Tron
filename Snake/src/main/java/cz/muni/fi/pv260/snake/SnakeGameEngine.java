@@ -27,12 +27,12 @@ public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
 
     @Override
     public void init() {
-        gameData = new GameData();
+        gameData = new GameData(screenManager.getWindow());
     }
 
     @Override
     public void update() {
-
+        gameData.getSnakeController().moveSnake();
     }
 
     @Override

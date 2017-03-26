@@ -25,13 +25,13 @@ public class SnakeScreenManager extends AWTPresentationAdapter {
     }
 
     private void drawPlayerAndFood(GameData gameData) {
-        drawPlayer(gameData.getPlayer());
+        drawSnake(gameData.getSnake());
         drawCurrentFood(gameData.getCurrentFood());
     }
 
-    private void drawPlayer(Snake player) {
-        player.getBody().getPoints().forEach(point -> {
-            drawPixelWithColor(point, player.getColor());
+    private void drawSnake(Snake snake) {
+        snake.getBody().getPoints().forEach(point -> {
+            drawPixelWithColor(point, snake.getColor());
         });
     }
 
