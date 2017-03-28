@@ -1,7 +1,5 @@
 package cz.muni.fi.pv260.control.controller;
 
-import java.util.HashMap;
-
 /**
  * Interface for input controller builders
  *

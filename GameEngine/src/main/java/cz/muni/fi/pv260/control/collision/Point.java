@@ -25,19 +25,6 @@ public class Point {
         this.coordinateY = coordinateY;
     }
 
-    public void moveCoordinates(int amountX, int amountY){
-        coordinateX += amountX;
-        coordinateY += amountY;
-    }
-
-    public void setCoordinateX(int coordinateX) {
-        this.coordinateX = coordinateX;
-    }
-
-    public void setCoordinateY(int coordinateY) {
-        this.coordinateY = coordinateY;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Point){

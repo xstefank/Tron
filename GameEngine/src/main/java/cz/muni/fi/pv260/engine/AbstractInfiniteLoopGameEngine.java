@@ -23,11 +23,15 @@ public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
     @Override
     public void stop() {
-        frameTimer.stopTimer();
+        if (isRunning()) {
+            frameTimer.stopTimer();
+        }
     }
 
     private void startGame() {
-        frameTimer.startTimer();
+        if (!isRunning()) {
+            frameTimer.startTimer();
+        }
     }
 
     private class InfiniteLoopFrameTimer extends FrameTimerImpl {

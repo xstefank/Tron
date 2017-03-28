@@ -37,12 +37,6 @@ public interface Path {
     Point getHeadPosition();
 
     /**
-     * Return the path length in points
-     * @return the number of points
-     */
-    int getLength();
-
-    /**
      * Returns path points without first element
      * @return the path without first element
      */

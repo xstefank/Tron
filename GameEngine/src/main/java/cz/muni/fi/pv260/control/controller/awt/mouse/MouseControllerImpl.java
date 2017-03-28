@@ -25,9 +25,4 @@ public class MouseControllerImpl implements InputController<MouseEvent> {
             action.executeAction(event);
         }
     }
-
-    @Override
-    public void registerEvent(MouseEvent event, InputAction<MouseEvent> action) {
-        buttonEvents.putIfAbsent(event.getButton(), action);
-    }
 }

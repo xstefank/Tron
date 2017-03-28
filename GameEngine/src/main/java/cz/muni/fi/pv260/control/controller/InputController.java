@@ -16,12 +16,4 @@ public interface InputController<T> {
      * @param event occured input event
      */
     void processEvent(T event);
-
-    /**
-     * Registers the controller event with the defined user action
-     *
-     * @param event keyboard event
-     * @param action user action to be performed when event occurs
-     */
-    void registerEvent(T event, InputAction<T> action);
 }

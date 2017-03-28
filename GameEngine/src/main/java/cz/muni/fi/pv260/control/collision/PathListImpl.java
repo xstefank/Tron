@@ -40,11 +40,6 @@ public class PathListImpl implements Path {
     }
 
     @Override
-    public int getLength() {
-        return traveledPoints.size();
-    }
-
-    @Override
     public List<Point> getPathTail() {
         List<Point> tail = new ArrayList<>(traveledPoints);
         tail.remove(getHeadPosition());

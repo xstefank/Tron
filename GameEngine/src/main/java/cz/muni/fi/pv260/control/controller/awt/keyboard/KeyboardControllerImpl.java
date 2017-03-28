@@ -22,9 +22,4 @@ public class KeyboardControllerImpl implements InputController<KeyEvent> {
             action.executeAction(event);
         }
     }
-
-    @Override
-    public void registerEvent(KeyEvent event, InputAction<KeyEvent> action) {
-        keyEvents.putIfAbsent(event.getKeyCode(), action);
-    }
 }
