@@ -1,9 +1,6 @@
 package cz.muni.fi.pv260.snake;
 
-import cz.muni.fi.pv260.control.collision.CollisionDetector;
-import cz.muni.fi.pv260.control.collision.Path;
-import cz.muni.fi.pv260.control.collision.PathPointCollisionDetector;
-import cz.muni.fi.pv260.control.collision.Point;
+import cz.muni.fi.pv260.control.collision.*;
 import cz.muni.fi.pv260.engine.AbstractInfiniteLoopGameEngine;
 import cz.muni.fi.pv260.snake.listener.KeyboardListener;
 import cz.muni.fi.pv260.snake.model.GameData;
@@ -40,13 +37,19 @@ public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
     @Override
     public void update() {
         gameData.getSnakeController().moveSnake();
+        checkPlayerSelfCollision();
         checkPlayerFoodCollision(gameData);
+    }
+
+    private void checkPlayerSelfCollision() {
+        if (collisionDetector.detectCollision(gameData.getSnake().getBody().getTailPath(), gameData.getSnake().getPosition())) {
+            stop();
+        }
     }
 
     private void checkPlayerFoodCollision(GameData gameData) {
         if (collisionDetector.detectCollision(gameData.getSnake().getBody(), gameData.getCurrentFood().getPosition())) {
             gameData.eatFood();
-
         }
     }
 

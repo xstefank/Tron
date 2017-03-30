@@ -75,7 +75,7 @@ public class TronGameEngine extends AbstractInfiniteLoopGameEngine {
         playerControllers.forEach(controller -> playerControllers.forEach(otherController -> {
             if (collisionDetector
                     .detectCollision(controller.getPlayer().getPath(), otherController.getPlayer().getPath())) {
-                System.exit(0);
+                stop();
             }
         }));
     }
