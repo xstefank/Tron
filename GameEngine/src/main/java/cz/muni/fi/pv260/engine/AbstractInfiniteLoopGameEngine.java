@@ -2,9 +2,17 @@ package cz.muni.fi.pv260.engine;
 
 public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
-    private static final int DEFAULT_SLEEP_TIME = 20;
+    private static final int DEFAULT_FRAME_RATE = 50;
 
-    private FrameTimer frameTimer = new InfiniteLoopFrameTimer(DEFAULT_SLEEP_TIME);
+    private FrameTimer frameTimer;
+
+    public AbstractInfiniteLoopGameEngine() {
+        frameTimer = new InfiniteLoopFrameTimer(DEFAULT_FRAME_RATE);
+    }
+
+    public AbstractInfiniteLoopGameEngine(int frameRate) {
+        this.frameTimer = new InfiniteLoopFrameTimer(frameRate);
+    }
 
     @Override
     public void run() {
@@ -36,8 +44,8 @@ public abstract class AbstractInfiniteLoopGameEngine implements GameEngine {
 
     private class InfiniteLoopFrameTimer extends FrameTimerImpl {
 
-        public InfiniteLoopFrameTimer(int sleepTime) {
-            super(sleepTime);
+        public InfiniteLoopFrameTimer(int frameRate) {
+            super(1000 / frameRate);
         }
 
         @Override

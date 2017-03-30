@@ -15,6 +15,10 @@ public class SnakeGameEngine extends AbstractInfiniteLoopGameEngine {
     private SnakeScreenManager screenManager = new SnakeScreenManager();
     private CollisionDetector<Path, Point> collisionDetector = new PathPointCollisionDetector();
 
+    public SnakeGameEngine() {
+        super(20);
+    }
+
     public static void main(String[] args) {
         new SnakeGameEngine().run();
     }

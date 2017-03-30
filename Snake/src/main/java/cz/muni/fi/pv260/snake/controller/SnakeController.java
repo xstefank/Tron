@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  */
 public class SnakeController {
 
-    private static final int START_MOVE_SIZE = 2;
+    private static final int START_MOVE_SIZE = 10;
 
     private Snake snake;
     private InputController<KeyEvent> inputController;
