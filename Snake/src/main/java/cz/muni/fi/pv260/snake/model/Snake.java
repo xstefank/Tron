@@ -14,14 +14,20 @@ import java.awt.Color;
  */
 public class Snake {
 
+    private static final int EASY = 5;
+    private static final int MEDIUM = 10;
+    private static final int HARD = 20;
+
     private DirectionControl2D directionControl;
     private Path body;
     private Color color;
+    private int speed;
 
     public Snake(Direction startDirection, Point startPosition, Color color) {
         this.directionControl = new DirectionControl2DImpl(startDirection);
         this.body = new PathListImpl(startPosition);
         this.color = color;
+        this.speed = EASY;
     }
 
     public DirectionControl2D getDirectionControl() {
@@ -42,5 +48,17 @@ public class Snake {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void increaseSpeed() {
+        switch (speed) {
+            case EASY: speed = MEDIUM; break;
+            case MEDIUM: speed = HARD; break;
+            default: speed = MEDIUM;
+        }
     }
 }

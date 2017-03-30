@@ -14,7 +14,7 @@ import java.awt.Graphics2D;
  */
 public class SnakeScreenManager extends AWTPresentationAdapter {
 
-    private static final int PIXEL_SIZE = 10;
+    private static final int PIXEL_SIZE = 20;
 
     public void updateWindow(GameData gameData) {
         Graphics2D graphics = getGraphics();

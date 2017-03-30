@@ -47,8 +47,8 @@ public class GameData {
 
     private Food generateNewFood() {
         Random random = new Random();
-        int x = random.nextInt(window.getWidth() + 1) * 10 % window.getWidth();
-        int y = random.nextInt(window.getHeight() + 1) * 10 % window.getHeight();
+        int x = random.nextInt(window.getWidth() + 1) * 20 % window.getWidth();
+        int y = random.nextInt(window.getHeight() + 1) * 20 % window.getHeight();
         return new Food(new Point(x, y), randomColor(random));
     }
 

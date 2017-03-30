@@ -13,13 +13,9 @@ import java.awt.event.KeyEvent;
  */
 public class SnakeController {
 
-    private static final int START_MOVE_SIZE = 10;
-
     private Snake snake;
     private InputController<KeyEvent> inputController;
     private Window window;
-
-    private int moveSize = START_MOVE_SIZE;
 
     public SnakeController(Snake snake, InputController<KeyEvent> inputController, Window window) {
         this.snake = snake;
@@ -28,8 +24,8 @@ public class SnakeController {
     }
 
     public void moveSnake() {
-        int moveX = snake.getDirectionControl().getDirection().getMultiplierX() * moveSize;
-        int moveY = snake.getDirectionControl().getDirection().getMultiplierY() * moveSize;
+        int moveX = snake.getDirectionControl().getDirection().getMultiplierX() * snake.getSpeed();
+        int moveY = snake.getDirectionControl().getDirection().getMultiplierY() * snake.getSpeed();
         adjustPosition(moveX, moveY);
     }
 
@@ -40,6 +36,7 @@ public class SnakeController {
     public void eatFood(Food food) {
         snake.getBody().addPointToPath(food.getPosition());
         snake.setColor(food.getColor());
+        updateDifficulty();
     }
 
     public Snake getSnake() {
@@ -59,6 +56,12 @@ public class SnakeController {
 
         snake.getBody().addPointToPath(new Point(coordinateX, coordinateY));
         snake.getBody().removeLastPointFromPath();
+    }
+
+    private void updateDifficulty() {
+        if (snake.getBody().getPoints().size() % snake.getSpeed() == 0) {
+            snake.increaseSpeed();
+        }
     }
 
 }
