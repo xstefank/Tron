@@ -37,8 +37,8 @@ public interface Path {
     Point getHeadPosition();
 
     /**
-     * Returns path points without first element
+     * Returns tail path consisting of points without first element
      * @return the path without first element
      */
-    List<Point> getPathTail();
+    Path getTailPath();
 }

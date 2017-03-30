@@ -14,8 +14,8 @@ public class TronCollisionDetector implements CollisionDetector<Path, Path> {
     @Override
     public boolean detectCollision(Path pathPlayer1, Path pathPlayer2) {
 
-        List<Point> path1 = pathPlayer1.getPathTail();
-        List<Point> path2 = pathPlayer2.getPathTail();
+        List<Point> path1 = pathPlayer1.getTailPath().getPoints();
+        List<Point> path2 = pathPlayer2.getTailPath().getPoints();
 
         Point headPosition1 = pathPlayer1.getHeadPosition();
         Point headPosition2 = pathPlayer2.getHeadPosition();

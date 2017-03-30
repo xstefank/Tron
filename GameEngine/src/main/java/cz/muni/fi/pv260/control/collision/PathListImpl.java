@@ -15,8 +15,12 @@ public class PathListImpl implements Path {
     public PathListImpl() {
     }
 
-    public PathListImpl(Point startionPosition) {
-        addPointToPath(startionPosition);
+    public PathListImpl(Point startingPosition) {
+        addPointToPath(startingPosition);
+    }
+
+    public PathListImpl(List<Point> list){
+        list.forEach(point -> traveledPoints.add(point));
     }
 
     @Override
@@ -40,9 +44,9 @@ public class PathListImpl implements Path {
     }
 
     @Override
-    public List<Point> getPathTail() {
+    public Path getTailPath() {
         List<Point> tail = new ArrayList<>(traveledPoints);
         tail.remove(getHeadPosition());
-        return Collections.unmodifiableList(tail);
+        return new PathListImpl(tail);
     }
 }
